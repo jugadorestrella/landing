@@ -1,0 +1,2776 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jugador Estrella — Tarjetas Deportivas Personalizadas</title>
+  <meta name="description" content="Crea tu propia tarjeta deportiva coleccionable personalizada. Diseño profesional con tu foto, nombre, número y estadísticas. Envío a todo México." />
+
+  <!-- Favicon -->
+  <link rel="icon" href="/favicon.ico" sizes="32x32" />
+  <link rel="icon" href="/icon.svg" type="image/svg+xml" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="manifest" href="/site.webmanifest" />
+  <meta name="theme-color" content="#D90119" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Open+Sans:wght@400;500;600;700&family=Oswald:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ============================================
+       CSS VARIABLES — BRAND TOKENS
+       Ajusta aquí los colores si el store usa
+       valores ligeramente distintos
+    ============================================ */
+    :root {
+      --red:        #ff0000;
+      --red-dark:   #cc0000;
+      --red-light:  #E8000010;
+      --black:      #111111;
+      --white:      #FFFFFF;
+      --gray-light: #F5F5F5;
+      --gray-mid:   #DDDDDD;
+      --gray-text:  #555555;
+      --gold:       #F5C518;
+      --font-head:  'Oswald', 'Montserrat', sans-serif;
+      --font-cond:  'Montserrat', sans-serif;
+      --font-body:  'Open Sans', sans-serif;
+      --radius:     6px;
+      --shadow:     0 4px 24px rgba(0,0,0,0.12);
+      --shadow-lg:  0 12px 48px rgba(0,0,0,0.18);
+      --transition: 0.25s ease;
+    }
+
+    /* ============================================
+       RESET & BASE
+    ============================================ */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--black);
+      background: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    /* ============================================
+       UTILITY
+    ============================================ */
+    .container {
+      max-width: 1140px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+    .btn {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 14px 36px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      border: none;
+      text-decoration: none;
+      position: relative;
+      z-index: 2;
+    }
+    /* CTA principal — rojo sólido con sombra */
+    .btn-primary {
+      background: var(--red);
+      color: var(--white);
+      box-shadow: 0 4px 16px rgba(255,0,0,0.3);
+    }
+    .btn-primary:hover {
+      background: var(--red-dark);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(255,0,0,0.4);
+    }
+    /* Botón secundario — discreto, borde negro */
+    .btn-secondary {
+      background: var(--white);
+      color: var(--black);
+      border: 2px solid var(--black);
+    }
+    .btn-secondary:hover {
+      background: var(--black);
+      color: var(--white);
+      transform: translateY(-2px);
+    }
+    /* Versión secundaria sobre fondo oscuro/rojo */
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid var(--white);
+    }
+    .btn-outline:hover {
+      background: var(--white);
+      color: var(--red);
+      transform: translateY(-2px);
+    }
+    .section-label {
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--gray-text);
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    /* ============================================
+       ANNOUNCEMENT BAR
+    ============================================ */
+    .announcement-bar {
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      padding: 10px 16px;
+      font-family: var(--font-cond);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+    .announcement-bar span {
+      color: var(--gold);
+      font-weight: 700;
+    }
+
+    /* ============================================
+       HEADER / NAV
+    ============================================ */
+    header {
+      background: var(--red);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .nav-logo .logo-main {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    /* ---- NOTA: Reemplaza este texto-logo por tu imagen SVG/PNG cuando lo tengas
+              Ejemplo: <img src="images/logo.png" alt="Jugador Estrella" height="40"> ---- */
+    .nav-logo .logo-main span { color: var(--gold); }
+    .nav-logo .logo-sub {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-family: var(--font-cond);
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.88);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--white) !important;
+      color: var(--red) !important;
+      padding: 8px 20px;
+      border-radius: var(--radius);
+      font-weight: 700 !important;
+      border: 2px solid var(--white) !important;
+    }
+    .nav-cta:hover {
+      background: transparent !important;
+      color: var(--white) !important;
+    }
+    /* Mobile hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px 10px;
+      background: var(--red);
+      border: 2px solid var(--black);
+      border-radius: var(--radius);
+    }
+    .hamburger span {
+      width: 22px; height: 2px;
+      background: var(--black);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger:hover {
+      background: var(--red-dark);
+    }
+
+    /* ============================================
+       HERO
+    ============================================ */
+    .hero {
+      position: relative;
+      min-height: 90vh;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      background: var(--black);
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      /*
+        ============================================================
+        FOTO HERO FALLBACK — imagen estática cuando no hay video
+        o cuando el video termina su primera reproducción.
+        Ideal: foto de tarjeta en mano, alta calidad
+        Tamaño: 1920×1080 px mínimo
+        ============================================================
+      */
+      background-image:
+        linear-gradient(105deg, rgba(0,0,0,0.82) 42%, rgba(0,0,0,0.15) 100%),
+        url('images/hero-bg.jpg');
+      background-size: cover;
+      background-position: center right;
+      background-repeat: no-repeat;
+    }
+    /* VIDEO DE FONDO */
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center right;
+      z-index: 0;
+      opacity: 1;
+      transition: opacity 1.2s ease;
+    }
+    .hero-video.fade-out { opacity: 0; pointer-events: none; }
+    /* Overlay oscuro sobre el video (igual que sobre la foto) */
+    .hero-video-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(105deg, rgba(0,0,0,0.82) 42%, rgba(0,0,0,0.15) 100%);
+      z-index: 1;
+    }
+    /* El contenido del hero siempre encima */
+    .hero-content { z-index: 2; }
+    /* Fallback decorativo cuando no hay foto */
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 80% at 80% 50%, rgba(204,0,0,0.18) 0%, transparent 70%),
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 40px,
+          rgba(255,255,255,0.015) 40px,
+          rgba(255,255,255,0.015) 41px
+        );
+    }
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 600px;
+      padding: 80px 24px 80px;
+      margin-left: max(24px, calc((100vw - 1140px) / 2));
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-cond);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 22px;
+    }
+    .hero-badge::before {
+      content: '★';
+      font-size: 0.9rem;
+    }
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      line-height: 1.0;
+      margin-bottom: 20px;
+    }
+    .hero h1 em {
+      font-style: normal;
+      color: var(--gold);
+      display: block;
+    }
+    .hero-desc {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.82);
+      line-height: 1.65;
+      margin-bottom: 36px;
+      max-width: 480px;
+    }
+    .hero-actions {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      align-items: center;
+    }
+    .hero-actions .btn { font-size: 1.05rem; padding: 16px 40px; }
+    .hero-stats {
+      display: flex;
+      gap: 36px;
+      margin-top: 52px;
+      flex-wrap: wrap;
+    }
+    .hero-stat strong {
+      display: block;
+      font-family: var(--font-head);
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: var(--white);
+      line-height: 1;
+    }
+    .hero-stat span {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.6);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+    .hero-card-float {
+      position: absolute;
+      right: max(5%, calc((100vw - 1140px) / 2));
+      bottom: 0;
+     width: clamp(200px, 28vw, 500px);
+      opacity: 1;
+      transform: rotate(-4deg);
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.5));
+      z-index: 3;
+opacity: 1;
+      /*
+        ============================================================
+        FOTO TARJETA HERO — reemplaza con foto de tarjeta real
+        Ideal: foto de tarjeta terminada en mano, recortada en PNG
+        Tamaño sugerido: 400 x 560 px
+        ============================================================
+      */
+    }
+
+    /* ============================================
+       DESCUENTO BANNER
+    ============================================ */
+    .discount-bar {
+      background: var(--red);
+      padding: 18px 24px;
+      text-align: center;
+    }
+    .discount-bar p {
+      font-family: var(--font-cond);
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--white);
+      letter-spacing: 0.04em;
+    }
+    .discount-bar strong {
+      background: var(--white);
+      color: var(--red);
+      font-weight: 800;
+      padding: 2px 10px;
+      border-radius: 4px;
+      letter-spacing: 0.12em;
+      font-size: 1.15rem;
+    }
+    .discount-bar a {
+      color: var(--gold);
+      font-weight: 700;
+      text-decoration: underline;
+      margin-left: 12px;
+    }
+
+    /* ============================================
+       PROPUESTA DE VALOR — 3 COLUMNAS
+    ============================================ */
+    .value-props {
+      background: var(--white);
+      padding: 72px 0;
+    }
+    .value-props .container { text-align: center; }
+    .value-props .section-title { margin-bottom: 48px; }
+    .vp-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 32px;
+    }
+    .vp-card {
+      padding: 36px 28px;
+      border: 1px solid var(--gray-mid);
+      border-radius: 10px;
+      text-align: center;
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .vp-card:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-4px);
+    }
+    .vp-icon {
+      width: 64px; height: 64px;
+      background: var(--red);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      font-size: 1.6rem;
+    }
+    .vp-card h3 {
+      font-family: var(--font-head);
+      font-size: 1.15rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .vp-card p {
+      font-size: 0.95rem;
+      color: var(--gray-text);
+      line-height: 1.6;
+    }
+
+    /* ============================================
+       DISEÑA SIN LÍMITES
+    ============================================ */
+    .designs-hero {
+      background: var(--gray-light);
+      padding: 80px 0;
+    }
+    .designs-hero-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 56px;
+    }
+
+    /* Tres pilares */
+    .designer-pillars {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      margin-bottom: 56px;
+    }
+    .pillar {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 32px 24px;
+      text-align: center;
+      border: 1px solid var(--gray-mid);
+      transition: box-shadow var(--transition), transform var(--transition);
+    }
+    .pillar:hover {
+      box-shadow: var(--shadow);
+      transform: translateY(-4px);
+    }
+    .pillar-icon {
+      font-size: 2.4rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .pillar h3 {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 10px;
+      letter-spacing: 0.04em;
+    }
+    .pillar p {
+      font-size: 0.9rem;
+      color: var(--gray-text);
+      line-height: 1.6;
+    }
+
+    /* Chips de deportes */
+    .sports-showcase {
+      text-align: center;
+      margin-bottom: 40px;
+    }
+    .sports-showcase-label {
+      font-family: var(--font-cond);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gray-text);
+      margin-bottom: 14px;
+    }
+    .sports-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px;
+    }
+    .sport-chip {
+      font-family: var(--font-cond);
+      font-size: 0.88rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      padding: 8px 18px;
+      border-radius: 100px;
+      background: var(--white);
+      border: 2px solid var(--gray-mid);
+      color: var(--gray-text);
+      cursor: pointer;
+      transition: all var(--transition);
+    }
+    .sport-chip:hover {
+      border-color: var(--red);
+      color: var(--red);
+    }
+    .sport-chip.active {
+      background: var(--red);
+      color: var(--white);
+      border-color: var(--red);
+      box-shadow: 0 4px 12px rgba(255,0,0,0.25);
+    }
+    /* Animación fade al cambiar galería */
+    @keyframes cardFadeIn {
+      from { opacity: 0; transform: translateY(12px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .preview-card.animating {
+      animation: cardFadeIn 0.35s ease forwards;
+    }
+
+    /* Preview grid de tarjetas — layout masonry-like */
+    .design-preview-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      grid-template-rows: auto auto;
+      gap: 20px;
+      margin-bottom: 52px;
+    }
+    .preview-card {
+      background: var(--white);
+      border-radius: 10px;
+      overflow: visible;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+      aspect-ratio: 5/7;
+      position: relative;
+      transition: transform 0.3s cubic-bezier(.25,.8,.25,1), box-shadow 0.3s ease, z-index 0s;
+      cursor: default;
+      z-index: 1;
+    }
+    .preview-card:hover {
+      transform: translateY(-10px) scale(1.18);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.28);
+      z-index: 20;
+    }
+    .preview-card img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 10px;
+    }
+    .preview-card .preview-ph {
+      border-radius: 10px;
+      overflow: hidden;
+    }
+    /* Lightbox */
+    .lightbox-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.88);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      cursor: zoom-out;
+      backdrop-filter: blur(6px);
+    }
+    .lightbox-overlay.open {
+      display: flex;
+      animation: fadeIn 0.2s ease;
+    }
+    @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+    .lightbox-img {
+      max-width: min(420px, 90vw);
+      max-height: 90vh;
+      border-radius: 12px;
+      box-shadow: 0 32px 80px rgba(0,0,0,0.6);
+      object-fit: contain;
+      animation: scaleIn 0.25s cubic-bezier(.25,.8,.25,1);
+    }
+    @keyframes scaleIn { from{transform:scale(0.85);opacity:0} to{transform:scale(1);opacity:1} }
+    .lightbox-ph {
+      width: min(340px, 85vw);
+      aspect-ratio: 5/7;
+      border-radius: 12px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      animation: scaleIn 0.25s cubic-bezier(.25,.8,.25,1);
+    }
+    .lightbox-ph span { font-size: 5rem; }
+    .lightbox-ph p { color: rgba(255,255,255,0.7); font-family: var(--font-cond); font-size:1rem; text-align:center; }
+    .lightbox-close {
+      position: fixed;
+      top: 24px; right: 28px;
+      color: white;
+      font-size: 2rem;
+      cursor: pointer;
+      line-height: 1;
+      opacity: 0.7;
+      transition: opacity 0.2s;
+    }
+    .lightbox-close:hover { opacity: 1; }
+    .lightbox-label {
+      position: fixed;
+      bottom: 28px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255,255,255,0.1);
+      color: white;
+      font-family: var(--font-cond);
+      font-size: 0.85rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 8px 20px;
+      border-radius: 100px;
+      backdrop-filter: blur(4px);
+    }
+    .preview-ph {
+      width: 100%; height: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      background: var(--gray-light);
+      gap: 10px;
+      color: #bbb;
+      text-align: center;
+      padding: 16px;
+      font-family: var(--font-cond);
+      font-size: 0.78rem;
+    }
+    .preview-ph span { font-size: 2.6rem; opacity: 0.5; }
+    .preview-sport-tag {
+      position: absolute;
+      top: 10px; left: 10px;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-cond);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 3px 10px;
+      border-radius: 4px;
+    }
+
+    /* Video CTA block */
+    .video-cta-block {
+      background: var(--black);
+      border-radius: 16px;
+      overflow: hidden;
+    }
+    .video-cta-content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: 0;
+    }
+    .video-cta-text {
+      padding: 48px 44px;
+    }
+    .video-cta-text .section-label { text-align: left; }
+    .video-cta-text h3 {
+      font-family: var(--font-head);
+      font-size: clamp(1.4rem, 2.5vw, 2rem);
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin: 12px 0 16px;
+    }
+    .video-cta-text p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.65);
+      line-height: 1.65;
+      margin-bottom: 28px;
+    }
+    .video-cta-actions {
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+    .video-cta-visual {
+      background: #1a1a1a;
+      height: 100%;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+    .video-placeholder {
+      width: 100%;
+      height: 100%;
+      min-height: 300px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .video-ph-inner {
+      text-align: center;
+      color: rgba(255,255,255,0.5);
+      padding: 32px;
+    }
+    .play-btn-big {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--red);
+      color: var(--white);
+      font-size: 1.6rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 20px;
+      box-shadow: 0 0 0 8px rgba(255,0,0,0.15);
+    }
+    .video-ph-inner p {
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 8px;
+      color: rgba(255,255,255,0.6);
+    }
+    .video-ph-inner p strong { color: var(--white); }
+    .video-ph-inner span {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.35);
+      font-family: var(--font-cond);
+      letter-spacing: 0.1em;
+    }
+
+    /* ============================================
+       CÓMO FUNCIONA
+    ============================================ */
+    .how-it-works {
+      background: var(--black);
+      padding: 80px 0;
+      position: relative;
+      overflow: visible;
+    }
+    .how-it-works::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: repeating-linear-gradient(
+        90deg,
+        transparent,
+        transparent 80px,
+        rgba(255,255,255,0.018) 80px,
+        rgba(255,255,255,0.018) 81px
+      );
+    }
+    .how-it-works .section-title { color: var(--white); text-align: center; }
+    .how-it-works .section-label { text-align: center; }
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      margin-top: 56px;
+      position: relative;
+    }
+    .steps-grid::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: calc(100% / 6);
+      right: calc(100% / 6);
+      height: 2px;
+      background: linear-gradient(90deg, var(--red), var(--red-dark));
+    }
+    .step {
+      text-align: center;
+      padding: 0 32px;
+      position: relative;
+    }
+    .step-number {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 24px;
+      position: relative;
+      z-index: 2;
+      box-shadow: 0 0 0 6px rgba(204,0,0,0.2), 0 0 0 12px rgba(204,0,0,0.08);
+    }
+    .step-icon {
+      font-size: 2.2rem;
+      margin-bottom: 16px;
+      display: block;
+    }
+    .step h3 {
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      margin-bottom: 12px;
+    }
+    .step p {
+      font-size: 0.95rem;
+      color: rgba(255,255,255,0.6);
+      line-height: 1.6;
+    }
+    .how-cta {
+      text-align: center;
+      margin-top: 52px;
+      position: relative;
+      z-index: 5;
+    }
+
+    /* ============================================
+       PARA QUIÉN ES
+    ============================================ */
+    .for-who {
+      padding: 80px 0;
+      background: var(--white);
+    }
+    .for-who-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .for-who-visual {
+      position: relative;
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      background: var(--gray-light);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .for-who-visual img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+    }
+    /*
+      ============================================================
+      FOTO "PARA QUIÉN ES" — reemplaza con foto real
+      Ideal: familia/padre con hijo mostrando la tarjeta
+      Tamaño: 600 x 750 px
+      ============================================================
+    */
+    .for-who-visual .placeholder-img {
+      text-align: center;
+      color: #bbb;
+      font-family: var(--font-cond);
+      font-size: 0.8rem;
+      padding: 24px;
+    }
+    .for-who-visual .placeholder-img .ph-big { font-size: 4rem; display: block; margin-bottom: 12px; opacity: 0.4; }
+    .for-who-accent {
+      position: absolute;
+      bottom: -20px; right: -20px;
+      width: 150px; height: 150px;
+      background: var(--red);
+      border-radius: 50%;
+      opacity: 0.12;
+    }
+    .use-cases {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+      margin-top: 32px;
+    }
+    .use-case {
+      display: flex;
+      align-items: flex-start;
+      gap: 16px;
+      padding: 18px 20px;
+      border-radius: 8px;
+      border: 1px solid var(--gray-mid);
+      transition: border-color var(--transition), background var(--transition);
+    }
+    .use-case:hover {
+      border-color: var(--red);
+      background: #fff5f5;
+    }
+    .use-case-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+      margin-top: 2px;
+    }
+    .use-case-text strong {
+      display: block;
+      font-family: var(--font-cond);
+      font-size: 1rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 4px;
+    }
+    .use-case-text span {
+      font-size: 0.88rem;
+      color: var(--gray-text);
+      line-height: 1.5;
+    }
+
+    /* ============================================
+       FICHA TÉCNICA
+    ============================================ */
+    .specs {
+      background: var(--gray-light);
+      padding: 80px 0;
+    }
+    .specs-inner {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 64px;
+      align-items: center;
+    }
+    .specs-card {
+      background: var(--white);
+      border-radius: 12px;
+      box-shadow: var(--shadow);
+      padding: 36px;
+      position: relative;
+      overflow: hidden;
+    }
+    .specs-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--red);
+    }
+    .spec-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--gray-light);
+    }
+    .spec-row:last-child { border-bottom: none; }
+    .spec-check {
+      width: 28px; height: 28px;
+      background: var(--red);
+      color: var(--white);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.8rem;
+      flex-shrink: 0;
+    }
+    .spec-row p {
+      font-size: 0.95rem;
+      color: var(--black);
+      line-height: 1.4;
+    }
+    .spec-row p strong { color: var(--red); }
+    .specs-copy .section-title { margin-bottom: 16px; }
+    .quality-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--black);
+      color: var(--white);
+      padding: 14px 20px;
+      border-radius: 8px;
+      margin-top: 28px;
+      font-family: var(--font-cond);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+    .quality-badge .qb-star { color: var(--gold); font-size: 1.2rem; }
+
+    /* ============================================
+       PAQUETES / PRECIOS
+    ============================================ */
+    .pricing {
+      background: var(--white);
+      padding: 80px 0;
+    }
+    .pricing-header { text-align: center; margin-bottom: 52px; }
+    .pricing-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+      align-items: start;
+    }
+    .price-card {
+      border: 2px solid var(--gray-mid);
+      border-radius: 12px;
+      padding: 32px 28px;
+      text-align: center;
+      position: relative;
+      transition: border-color var(--transition), box-shadow var(--transition);
+    }
+    .price-card:hover {
+      border-color: var(--red);
+      box-shadow: var(--shadow);
+    }
+    .price-card.popular {
+      border-color: var(--red);
+      box-shadow: var(--shadow-lg);
+      transform: scale(1.04);
+    }
+    .popular-badge {
+      position: absolute;
+      top: -14px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-cond);
+      font-size: 0.72rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 4px 16px;
+      border-radius: 100px;
+      white-space: nowrap;
+    }
+    .price-level {
+      font-family: var(--font-head);
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gray-text);
+      margin-bottom: 8px;
+    }
+    .price-name {
+      font-family: var(--font-head);
+      font-size: 1.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      margin-bottom: 4px;
+    }
+    .price-qty {
+      font-size: 0.9rem;
+      color: var(--gray-text);
+      margin-bottom: 24px;
+    }
+    .price-amount {
+      font-family: var(--font-head);
+      font-size: 2.4rem;
+      font-weight: 700;
+      color: var(--red);
+      line-height: 1;
+    }
+    .price-amount sup {
+      font-size: 1rem;
+      vertical-align: super;
+    }
+    .price-amount sub {
+      font-size: 0.9rem;
+      color: var(--gray-text);
+      font-weight: 400;
+    }
+    .price-per {
+      font-size: 0.8rem;
+      color: var(--gray-text);
+      margin-top: 4px;
+      margin-bottom: 24px;
+    }
+    .price-features {
+      text-align: left;
+      margin-bottom: 28px;
+    }
+    .price-features li {
+      font-size: 0.88rem;
+      color: var(--gray-text);
+      padding: 6px 0;
+      border-bottom: 1px solid var(--gray-light);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .price-features li::before {
+      content: '✓';
+      color: var(--red);
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .price-features li:last-child { border-bottom: none; }
+    .price-card .btn { width: 100%; text-align: center; }
+
+    /* ============================================
+       TESTIMONIOS
+    ============================================ */
+    .testimonials {
+      background: var(--gray-light);
+      padding: 80px 0;
+    }
+    .testimonials-header { text-align: center; margin-bottom: 52px; }
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .testi-card {
+      background: var(--white);
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.07);
+      position: relative;
+    }
+    .testi-card::before {
+      content: '"';
+      font-family: Georgia, serif;
+      font-size: 5rem;
+      color: var(--red);
+      opacity: 0.15;
+      position: absolute;
+      top: 10px; left: 20px;
+      line-height: 1;
+    }
+    .testi-stars {
+      color: var(--gold);
+      font-size: 1rem;
+      margin-bottom: 16px;
+      letter-spacing: 2px;
+    }
+    .testi-text {
+      font-size: 0.95rem;
+      color: var(--gray-text);
+      line-height: 1.65;
+      margin-bottom: 24px;
+      font-style: italic;
+    }
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .testi-avatar {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-head);
+      font-size: 1.1rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .testi-author-info strong {
+      display: block;
+      font-family: var(--font-cond);
+      font-size: 0.95rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+    .testi-author-info span {
+      font-size: 0.8rem;
+      color: var(--gray-text);
+    }
+    .testi-sport-tag {
+      display: inline-block;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-cond);
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 2px 8px;
+      border-radius: 4px;
+      margin-top: 4px;
+    }
+
+    /* ============================================
+       CTA FINAL
+    ============================================ */
+    .final-cta {
+      background: var(--red);
+      padding: 80px 0;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .final-cta::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 70% 100% at 50% 100%, rgba(0,0,0,0.25) 0%, transparent 70%),
+        repeating-linear-gradient(-45deg, transparent, transparent 30px, rgba(255,255,255,0.03) 30px, rgba(255,255,255,0.03) 31px);
+    }
+    .final-cta-content { position: relative; z-index: 1; }
+    .final-cta h2 {
+      font-family: var(--font-head);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .final-cta h2 em {
+      font-style: normal;
+      color: var(--gold);
+    }
+    .final-cta p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.82);
+      max-width: 520px;
+      margin: 0 auto 36px;
+      line-height: 1.6;
+    }
+    .final-cta .btn-outline { font-size: 1.1rem; padding: 16px 48px; }
+    .final-cta-sub {
+      margin-top: 20px;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.65);
+    }
+
+    /* ============================================
+       FOOTER
+    ============================================ */
+    footer {
+      background: var(--black);
+      padding: 48px 0 28px;
+    }
+    .footer-inner {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      gap: 48px;
+      padding-bottom: 36px;
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+    .footer-brand .logo-main {
+      font-family: var(--font-head);
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .footer-brand .logo-main span { color: var(--gold); }
+    .footer-brand .logo-sub {
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.45);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 14px;
+    }
+    .footer-brand p {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.6;
+      max-width: 280px;
+    }
+    .footer-social {
+      display: flex;
+      gap: 12px;
+      margin-top: 20px;
+    }
+    .social-icon {
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      border: 1px solid rgba(255,255,255,0.15);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.85rem;
+      color: rgba(255,255,255,0.55);
+      transition: all var(--transition);
+    }
+    .social-icon:hover {
+      background: var(--red);
+      border-color: var(--red);
+      color: var(--white);
+    }
+    .footer-col h4 {
+      font-family: var(--font-cond);
+      font-size: 0.8rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.4);
+      margin-bottom: 16px;
+    }
+    .footer-col ul li {
+      margin-bottom: 10px;
+    }
+    .footer-col ul li a {
+      font-size: 0.88rem;
+      color: rgba(255,255,255,0.6);
+      transition: color var(--transition);
+    }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-bottom {
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+    .footer-bottom p {
+      font-size: 0.78rem;
+      color: rgba(255,255,255,0.3);
+    }
+    .footer-bottom a { color: rgba(255,255,255,0.45); }
+    .footer-bottom a:hover { color: var(--white); }
+
+    /* ============================================
+       MOBILE NAV OPEN STATE
+    ============================================ */
+    .nav-links.open {
+      display: flex;
+      flex-direction: column;
+      position: absolute;
+      top: 100%;
+      left: 0; right: 0;
+      background: var(--red-dark);
+      padding: 20px 24px;
+      gap: 16px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+    }
+
+    /* ============================================
+       RESPONSIVE
+    ============================================ */
+    @media (max-width: 1024px) {
+      .designs-grid { grid-template-columns: repeat(3, 1fr); }
+      .designer-pillars { grid-template-columns: 1fr 1fr; }
+      .design-preview-grid { grid-template-columns: repeat(3, 1fr); }
+      .video-cta-content { grid-template-columns: 1fr; }
+      .video-cta-visual { min-height: 220px; }
+      .for-who-inner { grid-template-columns: 1fr; gap: 40px; }
+      .for-who-visual { aspect-ratio: 16/9; max-height: 320px; }
+      .specs-inner { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      header { position: relative; }
+
+      .vp-grid { grid-template-columns: 1fr; }
+      .designer-pillars { grid-template-columns: 1fr; }
+      .design-preview-grid { grid-template-columns: repeat(2, 1fr); }
+      .steps-grid { grid-template-columns: 1fr; gap: 40px; }
+      .steps-grid::before { display: none; }
+      .pricing-grid { grid-template-columns: 1fr; }
+      .price-card.popular { transform: none; }
+      .testi-grid { grid-template-columns: 1fr; }
+      .footer-inner { grid-template-columns: 1fr; gap: 32px; }
+      .footer-bottom { flex-direction: column; text-align: center; }
+      .hero-card-float { 
+  width: 150px;
+  right: 0px;
+  bottom: 400px;
+}
+      .hero-content { padding: 60px 24px; margin-left: 0; }
+    }
+
+    @media (max-width: 480px) {
+      .designer-pillars { grid-template-columns: 1fr; }
+      .design-preview-grid { grid-template-columns: repeat(2, 1fr); }
+      .hero-actions { flex-direction: column; }
+      .hero-actions .btn { width: 100%; text-align: center; }
+      .hero-stats { gap: 24px; }
+    }
+
+    /* ============================================
+       ANIMACIONES DE ENTRADA
+    ============================================ */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fade-up {
+      opacity: 0;
+      animation: fadeUp 0.65s ease forwards;
+    }
+    .fade-up.delay-1 { animation-delay: 0.1s; }
+    .fade-up.delay-2 { animation-delay: 0.22s; }
+    .fade-up.delay-3 { animation-delay: 0.34s; }
+    .fade-up.delay-4 { animation-delay: 0.46s; }
+
+    /* ============================================
+       COOKIE CONSENT BAR + MODAL
+    ============================================ */
+    .cookie-bar {
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 9999;
+      background: #111111; border-top: 3px solid var(--red);
+      padding: 14px 24px; display: none; align-items: center;
+      justify-content: space-between; gap: 16px; flex-wrap: wrap;
+      box-shadow: 0 -4px 24px rgba(0,0,0,0.4);
+    }
+    /* transition suave al mostrar */
+    .cookie-bar-text { flex: 1; min-width: 240px; }
+    .cookie-bar-text p { font-size: 0.8rem; color: rgba(255,255,255,0.72); line-height: 1.5; margin: 0; }
+    .cookie-bar-text p strong { color: var(--white); }
+    .cookie-bar-text a { color: #ff6666; text-decoration: underline; }
+    .cookie-bar-actions { display: flex; gap: 8px; align-items: center; flex-shrink: 0; flex-wrap: wrap; }
+    .cookie-btn {
+      font-family: var(--font-cond); font-size: 0.8rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase; padding: 8px 18px;
+      border-radius: var(--radius); cursor: pointer; border: 2px solid transparent;
+      transition: all var(--transition); white-space: nowrap;
+    }
+    .cookie-btn-accept { background: var(--red); color: var(--white); border-color: var(--red); }
+    .cookie-btn-accept:hover { background: var(--red-dark); }
+    .cookie-btn-reject { background: transparent; color: rgba(255,255,255,0.6); border-color: rgba(255,255,255,0.25); }
+    .cookie-btn-reject:hover { color: var(--white); border-color: rgba(255,255,255,0.6); }
+    .cookie-btn-settings { background: transparent; color: rgba(255,255,255,0.4); border: none; padding: 8px 6px; font-size: 0.72rem; text-decoration: underline; cursor: pointer; }
+    .cookie-btn-settings:hover { color: var(--white); }
+    .cookie-modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.8); z-index: 10000; align-items: center; justify-content: center; backdrop-filter: blur(4px); }
+    .cookie-modal-overlay.open { display: flex; }
+    .cookie-modal { background: #1a1a1a; border: 1px solid #2a2a2a; border-top: 3px solid var(--red); border-radius: 12px; padding: 32px; width: min(500px, 92vw); max-height: 88vh; overflow-y: auto; }
+    .cookie-modal h3 { font-family: var(--font-head); font-size: 1.15rem; color: var(--white); text-transform: uppercase; margin-bottom: 8px; }
+    .cookie-modal > p { font-size: 0.8rem; color: rgba(255,255,255,0.5); line-height: 1.55; margin-bottom: 20px; }
+    .cookie-category { border: 1px solid #2a2a2a; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; }
+    .cookie-category-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+    .cookie-category-header strong { font-family: var(--font-cond); font-size: 0.85rem; font-weight: 700; color: var(--white); text-transform: uppercase; letter-spacing: 0.05em; }
+    .cookie-category p { font-size: 0.76rem; color: rgba(255,255,255,0.42); line-height: 1.5; margin: 0; }
+    .cookie-toggle { position: relative; width: 42px; height: 22px; flex-shrink: 0; }
+    .cookie-toggle input { opacity: 0; width: 0; height: 0; }
+    .cookie-toggle-slider { position: absolute; inset: 0; background: #444; border-radius: 22px; cursor: pointer; transition: 0.3s; }
+    .cookie-toggle-slider::before { content: ''; position: absolute; width: 16px; height: 16px; left: 3px; top: 3px; background: white; border-radius: 50%; transition: 0.3s; }
+    .cookie-toggle input:checked + .cookie-toggle-slider { background: var(--red); }
+    .cookie-toggle input:checked + .cookie-toggle-slider::before { transform: translateX(20px); }
+    .cookie-toggle input:disabled + .cookie-toggle-slider { opacity: 0.45; cursor: not-allowed; }
+    .cookie-modal-footer { display: flex; gap: 10px; margin-top: 20px; justify-content: flex-end; flex-wrap: wrap; }
+    @media (max-width: 600px) {
+      .cookie-bar { flex-direction: column; align-items: flex-start; padding: 14px 16px; }
+      .cookie-bar-actions { width: 100%; justify-content: flex-end; }
+    }
+    
+ /* ============================================
+   PRODUCT SHOT BANNER — CARRUSEL
+============================================ */
+.product-banner {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+  background: #000;
+}
+/* Slides */
+.product-banner-slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity 0.9s ease;
+  pointer-events: none;
+}
+.product-banner-slide.active {
+  opacity: 1;
+  position: relative;
+  pointer-events: auto;
+}
+.product-banner-slide img {
+  width: 100%;
+  height: clamp(320px, 42vw, 800px);
+  object-fit: cover;
+  object-position: center;
+  display: block;
+  opacity: 1;
+}
+
+/* Overlay por slide
+.product-banner-slide::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(90deg, rgba(0,0,0,0.55) 0%, transparent 35%, transparent 65%, rgba(0,0,0,0.55) 100%),
+    linear-gradient(180deg, rgba(0,0,0,0.2) 0%, transparent 40%, transparent 70%, rgba(0,0,0,0.5) 100%);
+  pointer-events: none;
+  */
+}
+/* Altura consistente cuando slide está oculto */
+.product-banner-track {
+  position: relative;
+  width: 100%;
+  height: clamp(320px, 42vw, 800px);
+}
+/* Callouts — fijos sobre el carrusel 
+.callout {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  pointer-events: none;
+  z-index: 10;
+}
+.callout-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: var(--red);
+  flex-shrink: 0;
+  box-shadow: 0 0 0 3px rgba(255,0,0,0.3);
+}
+.callout-line {
+  width: 48px; height: 1px;
+  background: rgba(255,255,255,0.5);
+  flex-shrink: 0;
+}
+.callout-text {
+  font-family: var(--font-cond);
+  font-size: clamp(0.65rem, 1.1vw, 0.82rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--white);
+  line-height: 1.3;
+  white-space: nowrap;
+}
+.callout-text small {
+  display: block;
+  font-weight: 400;
+  opacity: 0.7;
+  font-size: 0.85em;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.callout-tl { top: 14%; left: 3%; flex-direction: row; }
+.callout-tl .callout-line { order: 2; }
+.callout-tl .callout-dot  { order: 3; }
+.callout-tl .callout-text { order: 1; text-align: right; }
+.callout-tr { top: 14%; right: 3%; flex-direction: row-reverse; }
+.callout-tr .callout-line { order: 2; }
+.callout-tr .callout-dot  { order: 3; }
+.callout-tr .callout-text { order: 1; text-align: left; }
+.callout-bl { bottom: 20%; left: 3%; flex-direction: row; }
+.callout-bl .callout-line { order: 2; }
+.callout-bl .callout-dot  { order: 3; }
+.callout-bl .callout-text { order: 1; text-align: right; }
+.callout-br { bottom: 20%; right: 3%; flex-direction: row-reverse; }
+.callout-br .callout-line { order: 2; }
+.callout-br .callout-dot  { order: 3; }
+.callout-br .callout-text { order: 1; text-align: left; }*/
+
+/* Badge central */
+.product-banner-badge {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--red);
+  color: var(--white);
+  font-family: var(--font-head);
+  font-size: clamp(0.75rem, 1.3vw, 0.95rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  padding: 10px 32px;
+  white-space: nowrap;
+  z-index: 10;
+}
+/* Dots de navegación */
+.carousel-dots {
+  position: absolute;
+  bottom: 14px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+  z-index: 20;
+}
+.carousel-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.4);
+  border: none;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.3s ease;
+  padding: 0;
+}
+.carousel-dot.active {
+  background: var(--white);
+  transform: scale(1.3);
+}
+@media (max-width: 768px) {
+  .callout { display: none; }
+  .product-banner-badge { font-size: 0.72rem; padding: 8px 20px; }
+}
+
+  
+    /* ============================================
+       EQUIPOS, LIGAS Y ESCUELAS
+    ============================================ */
+    .teams { background: var(--black); padding: 80px 0; color: var(--white); }
+    .teams .section-title { color: var(--white); }
+    .teams .section-sub { color: rgba(255,255,255,0.75); }
+    .teams-inner { display: grid; grid-template-columns: 1.2fr 1fr; gap: 56px; align-items: center; }
+    .teams-list { margin: 28px 0 32px; display: flex; flex-direction: column; gap: 12px; }
+    .teams-list li { position: relative; padding-left: 30px; font-size: 0.98rem; line-height: 1.5; color: rgba(255,255,255,0.85); }
+    .teams-list li::before { content: '★'; position: absolute; left: 0; top: 0; color: var(--gold); }
+    .teams-list strong { color: var(--white); }
+    .teams-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .teams .btn-secondary { background: transparent; color: var(--white); border-color: var(--white); }
+    .teams .btn-secondary:hover { background: var(--white); color: var(--black); }
+    .teams-steps { display: flex; flex-direction: column; gap: 18px; }
+    .teams-step { display: flex; gap: 18px; align-items: flex-start; background: #1b1b1b; border: 1px solid #2a2a2a; border-radius: 12px; padding: 22px; }
+    .teams-step span { flex-shrink: 0; width: 44px; height: 44px; border-radius: 50%; background: var(--red); color: var(--white); font-family: var(--font-head); font-size: 1.3rem; font-weight: 700; display: flex; align-items: center; justify-content: center; }
+    .teams-step p { font-size: 0.95rem; line-height: 1.55; color: rgba(255,255,255,0.75); }
+    .teams-step strong { color: var(--white); }
+    @media (max-width: 900px) {
+      .teams-inner { grid-template-columns: 1fr; gap: 36px; }
+      .teams-actions .btn { width: 100%; text-align: center; }
+    }
+
+    .teams-flyer { display: flex; gap: 18px; align-items: center; background: #1b1b1b; border: 1px solid #2a2a2a; border-radius: 12px; padding: 18px; }
+    .teams-flyer-thumb { flex-shrink: 0; width: 110px; border-radius: 6px; overflow: hidden; box-shadow: 0 6px 18px rgba(0,0,0,0.45); transition: transform var(--transition); }
+    .teams-flyer-thumb:hover { transform: translateY(-3px) rotate(-1deg); }
+    .teams-flyer-thumb img { width: 100%; height: auto; display: block; }
+    .teams-flyer-copy strong { display: block; font-family: var(--font-head); font-size: 1.05rem; text-transform: uppercase; letter-spacing: 0.04em; color: var(--white); margin-bottom: 6px; }
+    .teams-flyer-copy p { font-size: 0.9rem; line-height: 1.5; color: rgba(255,255,255,0.75); margin-bottom: 14px; }
+    .teams-flyer-btn { padding: 10px 18px; font-size: 0.9rem; }
+    @media (max-width: 480px) {
+      .teams-flyer { flex-direction: column; text-align: center; }
+      .teams-flyer-thumb { width: 160px; }
+    }
+
+    /* Botón flotante de WhatsApp */
+    .wa-float {
+      position: fixed; right: 20px; bottom: 20px; z-index: 900;
+      display: flex; align-items: center; gap: 10px;
+      background: #25D366; color: #fff; border-radius: 100px;
+      padding: 12px 18px 12px 14px; box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+      font-family: var(--font-cond); font-weight: 700; font-size: 0.95rem;
+      transition: transform var(--transition), box-shadow var(--transition);
+    }
+    .wa-float:hover { transform: translateY(-2px); box-shadow: 0 10px 28px rgba(0,0,0,0.3); }
+    .wa-float svg { width: 26px; height: 26px; flex-shrink: 0; }
+    @media (max-width: 600px) {
+      .wa-float { padding: 14px; right: 16px; bottom: 16px; }
+      .wa-float span { display: none; }
+    }
+</style>
+</head>
+<body>
+  <!-- Google Tag Manager (noscript) — se activa solo si JS está deshabilitado -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-MSCCBS57"
+  height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  <!-- Meta Pixel (noscript) — solo si JS está deshabilitado -->
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=1816218159068621&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel (noscript) -->
+
+  <!-- ANNOUNCEMENT BAR -->
+  <div class="announcement-bar">
+    ⭐ Tarjetas coleccionables personalizadas para ti y tu equipo &nbsp;|&nbsp; Cotiza tu equipo por WhatsApp: <a href="https://wa.me/525571999695?text=Hola%2C%20quiero%20cotizar%20tarjetas%20para%20mi%20equipo" target="_blank" rel="noopener" style="color:inherit;text-decoration:none;"><span style="text-decoration:underline;text-underline-offset:3px;">55 7199 9695</span></a>
+  </div>
+
+  <!-- HEADER -->
+  <header>
+    <nav class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="data:image/jpeg;base64,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" alt="Jugador Estrella" height="52" style="display:block;">
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#como-funciona">¿Cómo funciona?</a></li>
+        <li><a href="#designs">Diseños</a></li>
+        <li><a href="#paquetes">Paquetes</a></li>
+        <li><a href="#equipos">Equipos</a></li>
+        <li><a href="https://jugadorestrella.com/store/producto/tarjetas-deportivas-personalizadas/" class="nav-cta btn">Crear mi tarjeta</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <!--
+      ============================================================
+      VIDEO HERO — reemplaza hero-video.mp4 con tu archivo real
+      Recomendaciones:
+        · Formato: MP4 (H.264) + WebM como fallback
+        · Resolución: 1920×1080 px
+        · Duración ideal: 8–15 segundos
+        · Peso máximo recomendado: 8 MB (comprime con HandBrake)
+        · Contenido ideal: tarjetas en mano, close-ups, acción deportiva
+        · El video se reproduce UNA VEZ y luego queda la imagen estática
+        · En mobile se deshabilita automáticamente (ahorro de datos)
+      ============================================================
+    -->
+    <video
+      class="hero-video"
+      id="heroVideo"
+      autoplay
+      muted
+      playsinline
+      preload="auto"
+      poster="images/hero-bg.jpg"
+    >
+      <source src="videos/hero-video.mp4" type="video/mp4">
+      <source src="videos/hero-video.webm" type="video/webm">
+    </video>
+    <div class="hero-video-overlay"></div>
+    <div class="hero-content">
+      <span class="hero-badge fade-up">Tarjetas estilo Trading Card Profesionales</span>
+      <h1 class="fade-up delay-1">
+        Tú eres la estrella<br>
+        <em>de tu propia tarjeta</em>
+        coleccionable
+      </h1>
+      <p class="hero-desc fade-up delay-2">
+        Diseño profesional estilo trading card de las ligas profesionales con su foto, nombre, número, posición y estadísticas.
+        <br>El regalo o premio de temporada que nunca va a olvidar. </p>
+      <div class="hero-actions fade-up delay-3">
+        <a href="https://jugadorestrella.com/store/producto/tarjetas-deportivas-personalizadas/" class="btn btn-primary">Crear mi tarjeta</a>
+        <a href="#designs" class="btn btn-secondary">Ver diseños</a>
+      </div>
+      <div class="hero-stats fade-up delay-4">
+        <div class="hero-stat">
+          <strong>100%</strong>
+          <span>Diseño personalizado</span>
+        </div>
+        <div class="hero-stat">
+          <strong>Ideal</strong>
+          <span>Cualquier deporte</span>
+        </div>
+        <div class="hero-stat">
+          <strong>7–10 días</strong>
+          <span>Hábiles, a domicilio</span>
+        </div>
+      </div>
+    </div>
+    <!--
+      ============================================================
+      FOTO FLOTANTE DE TARJETA (PNG con fondo transparente)
+      Ideal: mockup de tarjeta terminada en 3D o foto real
+      ============================================================
+    -->
+    <img class="hero-card-float" src="images/hero-card.png" alt="Tarjeta deportiva personalizada">
+  </section>
+
+  <!-- ==================== DESCUENTO ==================== -->
+  <div class="discount-bar">
+    <p>🏆 ¿Tarjetas para todo tu equipo? <strong>Cotiza sin compromiso</strong> &nbsp;·&nbsp; Tarjetas de coach incluidas
+      <a href="https://wa.me/525571999695?text=Hola%2C%20quiero%20cotizar%20tarjetas%20para%20mi%20equipo">Cotizar por WhatsApp →</a>
+    </p>
+  </div>
+
+  <!-- ==================== PROPUESTA DE VALOR ==================== -->
+  <section class="value-props">
+    <div class="container">
+      <span class="section-label">¿Por qué Jugador Estrella?</span>
+      <h2 class="section-title">Calidad de colección.<br>100% personalizada.</h2>
+      <div class="vp-grid" style="margin-top:48px">
+        <div class="vp-card">
+          <div class="vp-icon">🏆</div>
+          <h3>Calidad de colección</h3>
+          <p>Formato y acabado estilo trading card profesional. Superior al papel fotográfico convencional en presentación y durabilidad.</p>
+        </div>
+        <div class="vp-card">
+          <div class="vp-icon">🎨</div>
+          <h3>100% personalizada</h3>
+          <p>Tu foto, nombre, número de jersey, posición, equipo y estadísticas.&nbsp;</p>
+          <p>Diseña tu tarjeta en línea con nuestra herramienta fácil de usar desde cualquier dispositivo.</p>
+        </div>
+        <div class="vp-card">
+          <div class="vp-icon">📦</div>
+          <h3>En tu puerta en 7–10 días hábiles</h3>
+          <p>Producimos e imprimimos tus tarjetas con acabado plastificado brillante y las enviamos a todo México.&nbsp;</p>
+          <p>Formato oficial Sport Trading Card&nbsp; 2.5" × 3.5" (63.5 × 88.9 mm)&nbsp; compatible con micas y marcos coleccionadores.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  
+ <!-- ==================== PRODUCT SHOT BANNER ==================== -->
+<section class="product-banner" id="producto-real">
+  <div class="product-banner-track">
+
+    <!-- Slide 1 — Abanico de deportes -->
+    <div class="product-banner-slide active">
+      <img src="images/banner-01.jpg" alt="Tarjetas deportivas personalizadas — Jugador Estrella">
+    </div>
+
+    <!-- Slide 2 — Detalle grosor, brillo y stack -->
+    <div class="product-banner-slide">
+      <img src="images/banner-02.jpg" alt="Detalle de material y acabado — Jugador Estrella">
+    </div>
+
+    <!-- Slide 3 — Tarjetas individuales frontales -->
+    <div class="product-banner-slide">
+      <img src="images/banner-03.jpg" alt="Diseños de tarjetas por deporte — Jugador Estrella">
+    </div>
+
+    <!-- Callouts fijos
+    <div class="callout callout-tl">
+      <div class="callout-text">Formato oficial<small>2.5" × 3.5" · Compatible con micas</small></div>
+      <div class="callout-line"></div>
+      <div class="callout-dot"></div>
+    </div>
+    <div class="callout callout-tr">
+      <div class="callout-text">100% personalizable<small>Herramienta de diseño visual en línea</small></div>
+      <div class="callout-line"></div>
+      <div class="callout-dot"></div>
+    </div>
+    <div class="callout callout-bl">
+      <div class="callout-text">Impresión profesional<small>Acabado de colección de alta calidad</small></div>
+      <div class="callout-line"></div>
+      <div class="callout-dot"></div>
+    </div>
+    <div class="callout callout-br">
+      <div class="callout-text">Envío a todo México<small>Entrega en 7–10 días hábiles</small></div>
+      <div class="callout-line"></div>
+      <div class="callout-dot"></div>
+    </div> -->
+
+    <!-- Badge central -->
+    <div class="product-banner-badge">El producto real — impreso y en tus manos</div>
+
+    <!-- Dots de navegación -->
+    <div class="carousel-dots">
+      <button class="carousel-dot active" data-slide="0"></button>
+      <button class="carousel-dot" data-slide="1"></button>
+      <button class="carousel-dot" data-slide="2"></button>
+    </div>
+
+  </div>
+</section>
+
+  <!-- ==================== DISEÑA SIN LÍMITES ==================== -->
+  <!-- ==================== HERRAMIENTA DE DISEÑO ==================== -->
+  <section class="designs-hero" id="designtool" style="padding: 40px 0 1px;">
+    <div class="container">
+
+      <!-- Encabezado -->
+      <div class="designs-hero-header">
+        <span class="section-label">Herramienta de diseño en línea</span>
+        <h2 class="section-title">Diseña tu tarjeta.<br><em style="color:var(--red);font-style:normal;">Sin límites.</em></h2>
+        <p class="section-sub"> Nuestra herramienta de <strong>diseño en línea</strong> te permite&nbsp;</p>
+        <p class="section-sub">crear tu tarjeta exactamente como la imaginas.&nbsp;</p>
+        <p class="section-sub">&nbsp;&nbsp;Elige plantilla, sube tu foto, agrega textos, colores y elementos gráficos.&nbsp;</p>
+        <p class="section-sub">&nbsp;Lo que ves en pantalla es lo que recibes impreso. </p>
+      </div>
+
+      <!-- 3 pilares del diseñador -->
+      <div class="designer-pillars">
+        <div class="pillar">
+          <div class="pillar-icon">🎨</div>
+          <h3>Decenas de plantillas</h3>
+          <p>Decenas de plantillas profesionales para fútbol, béisbol, basquetbol, fútbol americano, ice hockey y más deportes. Nuevos diseños disponibles constantemente.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">✏️</div>
+          <h3>Editor 100%&nbsp; VISUAL</h3>
+          <p>Arrastra, mueve, cambia colores, tipografías y elementos. Lo que ves en pantalla es exactamente lo que se imprime. Sin sorpresas.</p>
+        </div>
+        <div class="pillar">
+          <div class="pillar-icon">🚀</div>
+          <h3>Tu imaginación, el único límite</h3>
+          <p>Combina fondos, marcos, stickers deportivos y efectos especiales. Cada tarjeta es única — personaliza hasta el último detalle.</p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== GALERÍA DE DISEÑOS ==================== -->
+  <section class="designs-hero" id="designs" style="padding: 100px 0 1px;">
+    <div class="container">
+
+      <!-- Showcase de deportes — visual, sin tabs -->
+      <div class="sports-showcase">
+        <div class="sports-showcase-label">
+          <span style="font-size: 200%;">Haz clic en tu deporte para ver algunos diseños</span>
+        </div>
+        <div class="sports-chips">
+          <button class="sport-chip active" data-sport="futbol">⚽ Fútbol</button>
+          <button class="sport-chip" data-sport="beisbol">⚾ Béisbol</button>
+          <button class="sport-chip" data-sport="basquetbol">🏀 Basquetbol</button>
+          <button class="sport-chip" data-sport="futbol-americano">🏈 Fútbol Americano</button>
+          <button class="sport-chip" data-sport="ice-hockey">🏒 Ice Hockey</button>
+          <button class="sport-chip" data-sport="otros">✨ Otros deportes</button>
+        </div>
+      </div>
+
+      <!-- Preview cards — muestra de diseños reales -->
+      <div class="design-preview-grid" id="designGrid">
+        <!-- Las 3 tarjetas se llenan dinámicamente por JS -->
+        <div class="preview-card" id="card-0"><div class="preview-ph"><span></span><small></small></div><div class="preview-sport-tag" id="tag-0"></div></div>
+        <div class="preview-card" id="card-1"><div class="preview-ph"><span></span><small></small></div><div class="preview-sport-tag" id="tag-1"></div></div>
+        <div class="preview-card" id="card-2"><div class="preview-ph"><span></span><small></small></div><div class="preview-sport-tag" id="tag-2"></div></div>
+      </div>
+
+    </div>
+  </section>
+
+<!-- ==================== TUTORIAL ==================== -->
+<section class="designs-hero" id="tutorial" style="padding: 20px 0 40px;">
+    <div class="container">
+      <!-- Video CTA -->
+      <div class="video-cta-block">
+        <div class="video-cta-content">
+          <div class="video-cta-text">
+            <span class="section-label">Tutorial completo</span>
+            <h3>Mira cómo funciona<br>el diseñador en línea</h3>
+            <p>En este video tutorial completo en YouTube te mostramos paso a paso todo lo que puedes hacer con nuestra herramienta de diseño.</p>
+            <div class="video-cta-actions">
+              <a href="https://jugadorestrella.com/store/producto/tarjetas-deportivas-personalizadas/" class="btn btn-primary">🎨 Probar el diseñador ahora</a>
+              <a href="https://youtu.be/gm-CkTMwAgk" target="_blank" class="btn btn-secondary">▶ Ver tutorial en YouTube</a>
+            </div>
+          </div>
+          <div class="video-cta-visual">
+            <a href="https://youtu.be/gm-CkTMwAgk" target="_blank" style="position:relative; display:block;">
+              <img src="https://img.youtube.com/vi/gm-CkTMwAgk/maxresdefault.jpg"
+                   alt="Tutorial diseñador Jugador Estrella" style="width:100%;border-radius:12px;">
+              <div class="play-overlay">▶</div>
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+    <!-- ==================== CÓMO FUNCIONA ==================== -->
+  <section class="how-it-works" id="como-funciona" style="padding: 100px 0 1px;">
+    <div class="container">
+      <span class="section-label">Proceso simple</span>
+      <h2 class="section-title" style="color:white">¿Cómo funciona?</h2>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-number">1</div>
+          <span class="step-icon">🖼️</span>
+          <h3>Sube tu foto</h3>
+          <p>Usa cualquier foto desde tu celular o computadora.&nbsp;</p>
+          <p>Entre mejor la calidad de la foto, mejor lucirá tu tarjeta.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">2</div>
+          <span class="step-icon">✏️</span>
+          <h3>Personaliza en línea</h3>
+          <p>Elige tu diseño favorito y agrega nombre, número de jersey, posición, equipo y estadísticas con nuestra herramienta en línea.</p>
+        </div>
+        <div class="step">
+          <div class="step-number">3</div>
+          <span class="step-icon">📬</span>
+          <h3>Recíbela en casa</h3>
+          <p>Imprimimos tus tarjetas en formato de colección profesional y las enviamos a todo México.&nbsp;</p>
+          <p>Entrega en 7 a 10 días hábiles.</p>
+        </div>
+      </div>
+      <div class="how-cta">
+        <a href="https://jugadorestrella.com/store/producto/tarjetas-deportivas-personalizadas/" class="btn btn-primary">Comenzar ahora</a>
+      </div>
+    </div>
+  </section>
+
+ <!-- ==================== PARA QUIÉN ES ==================== -->
+  <section class="for-who">
+    <div class="container">
+      <div class="for-who-inner">
+        <div class="for-who-visual">
+          <img src="images/familia-tarjeta.jpg" alt="Familia con tarjeta deportiva">
+          <div class="for-who-accent"></div>
+        </div>
+        <div class="for-who-copy">
+          <span class="section-label">El regalo perfecto</span>
+          <h2 class="section-title">Para cualquier<br>deportista</h2>
+          <p class="section-sub">Desde ligas infantiles hasta torneos escolares — Jugador Estrella convierte el esfuerzo de cada jugador en un recuerdo que se guarda para siempre.</p>
+          <div class="use-cases">
+            <div class="use-case">
+              <span class="use-case-icon">⚽</span>
+              <div class="use-case-text">
+                <strong>Ligas infantiles y academias</strong>
+                <span>El recuerdo ideal al finalizar la temporada o el torneo.</span>
+              </div>
+            </div>
+            <div class="use-case">
+              <span class="use-case-icon">🎁</span>
+              <div class="use-case-text">
+                <strong>Regalo de cumpleaños original</strong>
+                <span>Un regalo único que ningún niño deportista olvidará.</span>
+              </div>
+            </div>
+            <div class="use-case">
+              <span class="use-case-icon">🏫</span>
+              <div class="use-case-text">
+                <strong>Equipos escolares y colegios</strong>
+                <span>Premia a cada integrante del equipo con su propia tarjeta coleccionable.</span>
+              </div>
+            </div>
+            <div class="use-case">
+              <span class="use-case-icon">🏆</span>
+              <div class="use-case-text">
+                <strong>Recuerdo de temporada</strong>
+                <span>Inmortaliza los mejores momentos de tu trayectoria deportiva.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== FICHA TÉCNICA ==================== -->
+  <section class="specs">
+    <div class="container">
+      <div class="specs-inner">
+        <div class="specs-copy">
+          <span class="section-label">Especificaciones</span>
+          <h2 class="section-title">Calidad de<br>trading card profesional</h2>
+          <p class="section-sub">Nuestras tarjetas se fabrican en el formato y con el acabado de las <strong>Sport Trading Cards</strong> profesionales.</p>
+          <div class="quality-badge">
+            <span class="qb-star">★</span>
+            Compatible con micas protectoras, marcos y cajas coleccionadoras
+          </div>
+        </div>
+        <div class="specs-card">
+          <div class="spec-row">
+            <span class="spec-check">✓</span>
+            <p><strong>Formato oficial</strong> Sport Trading Card 2.5" × 3.5" (63.5 × 88.9 mm)</p>
+          </div>
+          <div class="spec-row">
+            <span class="spec-check">✓</span>
+            <p><strong>Impresión full color</strong> sobre fina cartulina de alta calidad</p>
+          </div>
+          <div class="spec-row">
+            <span class="spec-check">✓</span>
+            <p><strong>Plastificado brillante</strong> en ambas caras, frente y reverso</p>
+          </div>
+          <div class="spec-row">
+            <span class="spec-check">✓</span>
+            <p>Frente: <strong>foto, nombre, número, equipo y posición</strong></p>
+          </div>
+          <div class="spec-row">
+            <span class="spec-check">✓</span>
+            <p>Reverso: <strong>estadísticas completas</strong> y frase del jugador</p>
+          </div>
+          <div class="spec-row">
+            <span class="spec-check">✓</span>
+            <p>Diseño 100% personalizable con <strong>herramienta en línea</strong></p>
+          </div>
+          <div class="spec-row">
+            <span class="spec-check">✓</span>
+            <p>Envío a <strong>todo México</strong> en 7 a 10 días hábiles</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== PAQUETES ==================== -->
+  <section class="pricing" id="paquetes" style="padding: 100px 0 1px;">
+    <div class="container">
+      <div class="pricing-header">
+        <span class="section-label">Paquetes</span>
+        <h2 class="section-title">Elige tu paquete</h2>
+        <p class="section-sub">Todos los paquetes incluyen diseño en línea, impresión full color y envío a domicilio.</p>
+      </div>
+      <div class="pricing-grid">
+
+        <div class="price-card">
+          <p class="price-level" style="font-size:1.5rem">Nivel</p>
+          <h3 class="price-name" style="font-size:2.5rem">⭐&nbsp;</h3>
+          <h3 class="price-name" style="font-size:2.5rem">NOVATO</h3>
+<p class="price-qty">Paquete de 15 tarjetas</p>
+          <div class="price-amount" ><sup>$</sup>249<sub> MXN</sub></div>
+          <p class="price-per">IVA incluido</p>
+          <ul class="price-features">
+            <li>15 tarjetas personalizadas</li>
+            <li>Tu primera tarjeta oficial como Jugador Estrella.</li>
+            <li>Diseña tu tarjeta deportiva personalizada y recibe 15 tarjetas impresas con tu foto y el mismo diseño</li>
+            <li>Ideal para compartir con familia y amigos o comenzar tu colección.</li>
+          </ul>
+          <a href="https://jugadorestrella.com/store/producto/tarjetas-deportivas-personalizadas/" class="btn btn-primary">Personalizar</a>
+        </div>
+
+        <div class="price-card popular">
+          <span class="popular-badge">⭐ Más popular</span>
+          <p class="price-level" style="font-size:1.5rem">Nivel</p>
+          <h3 class="price-name" style="font-size:3rem">⭐⭐&nbsp;</h3>
+          <h3 class="price-name" style="font-size:3rem">Estrella</h3>
+<p class="price-qty">Paquete de 30 tarjetas</p>
+          <div class="price-amount"><sup>$</sup>399<sub> MXN</sub></div>
+          <p class="price-per">IVA incluido</p>
+          <ul class="price-features">
+            <li>30 tarjetas personalizadas</li>
+            <li>Cuando tu juego sube de nivel… también lo hace tu tarjeta.</li>
+            <li>Con el Nivel Estrella recibes 30 tarjetas personalizadas de tu foto del mismo diseño para compartir con compañeros, entrenadores y familia.</li>
+            <li>Perfecto para compartir con todo tu equipo.</li>
+          </ul>
+          <a href="https://jugadorestrella.com/store/producto/tarjetas-deportivas-personalizadas/" class="btn btn-primary">Personalizar</a>
+        </div>
+
+        <div class="price-card">
+          <p class="price-level" style="font-size:1.5rem">Nivel</p>
+          <h3 class="price-name" style="font-size:2.5rem">⭐⭐⭐&nbsp;</h3>
+          <h3 class="price-name" style="font-size:2.5rem">LEYENDA</h3>
+<p class="price-qty">Paquete de 60 tarjetas</p>
+          <div class="price-amount"><sup>$</sup>699<sub> MXN</sub></div>
+          <p class="price-per">IVA incluido</p>
+          <ul class="price-features">
+            <li>60 tarjetas personalizadas</li>
+            <li>Las leyendas dejan huella.</li>
+            <li>Recibes 60 tarjetas personalizadas de tu foto del mismo diseño para compartir, intercambiar o guardar como recuerdo de tu temporada.</li>
+            <li>La mejor opción para crear tu propia colección legendaria.</li>
+          </ul>
+          <a href="https://jugadorestrella.com/store/producto/tarjetas-deportivas-personalizadas/" class="btn btn-primary">Personalizar</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== EQUIPOS, LIGAS Y ESCUELAS ==================== -->
+  <section class="teams" id="equipos">
+    <div class="container">
+      <div class="teams-inner">
+        <div class="teams-copy">
+          <span class="section-label">Para equipos, ligas y escuelas</span>
+          <h2 class="section-title">Una tarjeta para<br>cada jugador del equipo</h2>
+          <p class="section-sub">El premio de fin de temporada que los niños sí guardan. Cada jugador recibe su propia tarjeta, con su foto, nombre, número y estadísticas.</p>
+          <ul class="teams-list">
+            <li><strong>Una tarjeta distinta por jugador</strong> con el diseño y los colores del equipo</li>
+            <li><strong>Tarjeta del coach de regalo</strong> en cada pedido de equipo</li>
+            <li><strong>Premios especiales:</strong> campeón, MVP, goleador, mejor portero</li>
+            <li><strong>Nosotros armamos los diseños:</strong> solo nos mandas las fotos y los datos</li>
+            <li><strong>Precio especial por volumen</strong> para ligas, academias, torneos y escuelas</li>
+          </ul>
+          <div class="teams-actions">
+            <a href="https://wa.me/525571999695?text=Hola%2C%20quiero%20cotizar%20tarjetas%20para%20mi%20equipo" target="_blank" rel="noopener" class="btn btn-primary">Cotiza tu equipo por WhatsApp</a>
+            <a href="mailto:contacto@jugadorestrella.com?subject=Cotizaci%C3%B3n%20para%20equipo" class="btn btn-secondary">Escríbenos por correo</a>
+          </div>
+        </div>
+        <div class="teams-steps">
+          <div class="teams-step"><span>1</span><p><strong>Escríbenos</strong> con el número de jugadores y la fecha en que las necesitas.</p></div>
+          <div class="teams-step"><span>2</span><p><strong>Envía fotos y datos</strong> de cada jugador y apruebas el diseño en soft proof antes de imprimir.</p></div>
+          <div class="teams-step"><span>3</span><p><strong>Recibe todo el equipo</strong> en 7 a 10 días hábiles, listo para la premiación.</p></div>
+          <div class="teams-flyer">
+            <a href="descargas/Flyer-Equipos-Jugador-Estrella.pdf" target="_blank" rel="noopener" class="teams-flyer-thumb">
+              <img src="images/flyer-equipos.jpg" alt="Flyer para equipos de Jugador Estrella" width="900" height="1158" loading="lazy">
+            </a>
+            <div class="teams-flyer-copy">
+              <strong>Flyer para tu liga o escuela</strong>
+              <p>Descárgalo y compártelo con tu coordinador, coaches o papás del equipo.</p>
+              <a href="descargas/Flyer-Equipos-Jugador-Estrella.pdf" download class="btn btn-primary teams-flyer-btn">Descargar flyer (PDF)</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== CTA FINAL ==================== -->
+  <section class="final-cta">
+    <div class="container">
+      <div class="final-cta-content">
+        <h2>¿Listo para crear tu<br><em>tarjeta jugador estrella</em>?</h2>
+        <p>Diseña en minutos y recíbela en tu puerta en 7 a 10 días hábiles.</p>
+        <p>El mejor recuerdo de tus hazañas deportivas.</p>
+<a href="https://jugadorestrella.com/store/producto/tarjetas-deportivas-personalizadas/" class="btn btn-outline">Comenzar ahora</a>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ==================== WHATSAPP FLOTANTE ==================== -->
+  <a class="wa-float" href="https://wa.me/525571999695?text=Hola%2C%20quiero%20informaci%C3%B3n%20sobre%20las%20tarjetas" target="_blank" rel="noopener" aria-label="Escríbenos por WhatsApp">
+    <svg viewBox="0 0 32 32" fill="currentColor" aria-hidden="true"><path d="M16 3C8.8 3 3 8.7 3 15.8c0 2.5.7 4.9 2 7L3 29l6.4-2c2 1.1 4.3 1.7 6.6 1.7 7.2 0 13-5.7 13-12.8S23.2 3 16 3zm0 23.4c-2.1 0-4.1-.6-5.9-1.7l-.4-.2-3.8 1.2 1.2-3.7-.3-.4c-1.2-1.8-1.8-3.8-1.8-5.9C5 9.9 9.9 5.2 16 5.2s11 4.7 11 10.6-4.9 10.6-11 10.6zm6-7.9c-.3-.2-2-1-2.3-1.1-.3-.1-.5-.2-.8.2-.2.3-.9 1.1-1.1 1.3-.2.2-.4.2-.7.1-.3-.2-1.4-.5-2.7-1.6-1-.9-1.7-2-1.9-2.3-.2-.3 0-.5.1-.7l.5-.6c.2-.2.2-.3.3-.6.1-.2 0-.4 0-.6l-1-2.5c-.3-.6-.5-.6-.8-.6h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.1-1.2 2.7s1.2 3.1 1.4 3.4c.2.2 2.4 3.6 5.8 5 .8.3 1.4.5 1.9.7.8.3 1.5.2 2.1.1.6-.1 2-.8 2.2-1.6.3-.8.3-1.4.2-1.6-.1-.1-.3-.2-.6-.4z"/></svg>
+    <span>¿Dudas? Escríbenos</span>
+  </a>
+
+  <!-- ==================== FOOTER — idéntico al store ==================== -->
+  <footer id="colophon" class="site-footer" style="background:#ff0000; color:#ffffff; padding:40px 20px; font-family:'Open Sans', Arial, sans-serif; font-size:16px; text-align:center;">
+    <div style="max-width:1200px; margin:0 auto;">
+
+      <!-- Logo -->
+      <div style="margin-bottom:25px;">
+        <a href="https://jugadorestrella.com/store">
+          <img src="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wBDAAMCAgICAgMCAgIDAwMDBAYEBAQEBAgGBgUGCQgKCgkICQkKDA8MCgsOCwkJDRENDg8QEBEQCgwSExIQEw8QEBD/2wBDAQMDAwQDBAgEBAgQCwkLEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBAQEBD/wAARCAA8ATwDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwD50oorlvijeXNj4C1e4tJ3hlEaIHU4IDSKpwfcEj8a/EsPReIrQop25ml97sf6g5xmMcny7EZjOPMqMJzaW7UYuVvnY6fzI8Z3r+dKXQEgsBjrzXuGmf8ABNT4DyfsZx/tHan4s8dJrv8AwrtvFklol9bC0+2fYTOFCmDf5e/Axvzjvnmqf7D/APwTb+DX7Sv7P2k/Frx94s8bWWq6jqF9A8WmXtvHAYoZjGvEkDtn5Tk7q+z/ANS/+n3/AJL/APbH80f8TMaf8iz/AMrf/cjxvcoXcSMetIssbHCupPoCK8d+GPhC3+IfxV8G/BabWNTTw54g8dx6MTHMPPW1e4iiLKSCu4I5I+XbuJOK+rP2/v2CPgz+yL8IdG+I/wAN/FXjO41y+8SW+lxrqd9bvEkTQTys4EcKNuBiXBzjBPFZw4OlJNut1dvd/wCCdmK+kjRoVKcY5c2nGLl+9SabSbSXI72vo21fsjzZmVQWYgAdSahXULF22JeQM3oJFJ/nXuv7N3/BMPxp8ePCtj8UP2lvHmreGdK1aJLvT/DulKkd19mYbkkmaQMkG5cEJsZ9pBYqeK7DUP2IP+CWEeov4Vb9pGOy1aMmIgePdP8AMWT0O6MpuB7cVVHg2TherVs/JX/G6/IyzH6StCniHHAZe501s5VOVv8A7dUJJf8AgTPmGkLKpALAZ9TXOeKfCfh/4HfHr4i/DDw74uutY8KeG0jnsr26uI5jLCYopBJuj+Q8SkZUAHA4r239ir9grQv2v/Cnib43fGnX/EuhaFNfGy8OpplzDCXjhB8+VjNG4MakrGCAPmSXPSuKjwtVq4uph3O0Ype9be+ytf8AU+mzHx4wOByDCZxDCuVWvKS9lzpcqg7Sk5cr0va3uq932PNQyscBgcehoLKOCwH1rvf24f2IPC37Fdl4F+KXwt8Q+J9U0S+1STStc/ta4ilKOyB4dpijQbXRJwQwPKLjrXNfshfst+CP2wfjv4+8LfEbxH4isbDw/pUN5ZSaPcxRsGMqIFPmxuNuCx4A55zWz4SmsSqHtPdcW727NK1r+a6nnw+kJhp5JLNFgn7WNWNN0/adJRlJT5uT+7JW5d1uYpnhU4MqA+7Cn5Br6x1T/gmZ/wAE+fDfic+AvEn7Q2t2PicmNRpd74u0uC8DSKGQeS0AbLAggY5yMda8l/ay/wCCeHib9k3wdP8AGX4L+PdW8S+FNJkj/trR9XVDcW8DsFE4aMBJEDMobCKyZDfMN2Nq3Bs4wbpVby7NW/G7PNy76SmFrYmNPH4B06beso1Odrz5XCN/v+88oqBr6yR/Ka7hD9NpkXP5Zrsf2XP2O/i1+2wk/jXVfE0vgT4Z21w9rFPFF5t1qUiffWFcqGCnhpGOwN8qq5DY9Ltf2Ef2NY/2jG+AVxr3jKW1ttJlS51qbW4I5P7WUCUxj9yIgixBgQRnfxnjnljwx7KEJYyqoOTSSSvq/O6Pdr+Of9oYrEUeHMBLEU6EJVJTlPk92O7UeSTt2vZvsjwrIPSkLoM5cDHXmt39qX9k24/ZctJfFPwQ+Nlh498MIrLqOkSXkMup6Uh+UTukLFWiDFQZVCbWZQykHNelfsXf8E3vgl+0b+zzo/xm+I3jXxrp+pahdagt0thf20duI4Lh4wx82B2BwmSS3qeK2pcISqSl++XKtmlf71fT8Ty8f9Iuhg6FJrLZ+1ldyjOfIktLOMuR86euvLG1jxZZonbasqE+gYGn19W+E/8AgmR+wP8AFYXWn/CL9orXdd1Kzi82X+yPFGmX7wqcAO8ccOduSOeOuM18nfFD4S+Mf2Wfj3efATxT4kPiLT7mxTVdD1NkKSS2z79u5STsIMcqFdxAKZBwayzDhWpg6Eq9OpzcurVrafez0eD/AB9wfEea0srxmEdF1Woxkp865nok1yxau9Lq+rV1bVPZ1XG5gM9Mmjen94fnWt+yb+zN4L/a6/aT8aeBPiVrniGz0vQNAGo2jaRcxROsglt4whMkbjaRK5wADnvX0j4z/wCCZn7APw81b+xPHv7Tmu+GtReNZ1s9V8V6TazeW2drbJIA204ODjnBrXC8IvEUIVnWtzJO3L3V+55+e/SHhk+aYnLoZfzqlOUOb2tr8rcW7ezdrtd2fLAdWO0MCR2BqKW8tIG2T3UUbHs7gH9a3f2jP2T/AIHeFfiT8J/h/wDsefGeXxdrnj7UbnTbu4PiK0vo7A5gWJ2a1RTGpEsrHdklYzgcGvqXUv8Aglv+xZ8HvB1trXx++M2tQXFwywzavqWu2ulW01wRnbCjIT2JCl3OMkmt1wZ72tbT/D/wTy6n0l17JOnlvv361dLdNfZ3vvpZW7u+nyCJYiocSKVbodwwaXen94fnXolt+xf+xrN+1RdfDef4+SwfDGXwLH4m07XB4r00CS/a98g24uSnlMAiu2zbv4yTivoTwx/wSO/Y48daedd8E/Grxrr2mCZoPtOl6/pt3B5i43J5kdsRuGRkZyMin/qX/wBP/wDyX/7YlfSY75Z/5W/+5HxuZEHV1596QyxKNxkUD3Ir1n9pP9ib9hj4XfBrxn4u+HP7Q13rni/w/bE2WkP4t0u4eS5EyRsjQRxCRiu5sqMEbT6V7JqX/BKD9jbwT4Qg8bfEr4xeMtB0oxW7XF3qOu6faWsckoXC+Y9sAMs2Bk5NH+pf/T//AMl/+2B/SY7ZZ/5W/wDuR8hJJHIMo6sPY5pS6A7SwBPYmvq9v+CTP7NXxD8HS+Kf2cP2gtfmuMOllqSapZ6pp5nUfcdrdEYckA4fK5zg9D4L+w5+wp4T/ae174rad8d/EXiqx1vwDq1tpDf2TfQoDNm5ScOZIn3BWgULtxxmp/1MlzfxtP8ADr+ZqvpL0vY3eWvnvt7VWt1d/Z3vtpy/NWs+K3p/eH50nmR8/OvHB5r6e8R/8E4f+CdvgzW7jw74u/at1TR9Vs3C3Nhf+MNHgniYgHa6NAGU4IPI6EV4Brv7Iv7NWpftu/Dn9nf4VfFHV/E/gjxVpb3eq6rYa1Z3s0VyqXj+Wk0MflKQLeIkMpIDk9xVf6l/9Pv/ACX/AO2M/wDiZj/qWf8Alb/7kYIZScBgT9aUkKMsQB6mut/bp/Yy+Gf7Heq/C25+GHinxZfX/irVLuK5Or3cEgSKE2+Agiij6mYg5yCK840D4eaX8af2jvhn8HfEuoalbaJ4jvjBeGwlVJlUhjuUsrLuATqVOBmvOrcMuljKeEVW/Om722t5X/U+wy7xwp47hrGcQSwTi8PKEeT2l1LnaS97kVra3919O+myGUnAYE+maWu1/bx/Yi+Fn7IGjeAfEPwx8V+L73VvEOuvav8A2teQSIkMcasdgihQ53Mo5JGCRiuJZ0jRndgqqCSScAD1rhznJnlEoR5+bmv0tt82fVeGviRHxDoYir9W9i6Livj5k+ZN78sbWs7q3bUCyrjcQM+tAZScBgT9a7D9jH9j3T/24vFvjDxn8QNX1/S/AXhwJpmmyaXKkUtzenDYVpEddqx/O425zNEM8Guq/bV/4J1+Bv2Xfg3Z/HL4LeLfFmrTaPq1qNTGqXcE0QspsosqGGJP+WpiU5JBWT2r2KXB9SpRU5VLSava2z7Xv+h+c4/6R2CwuZTwtHBOpRjPl9oqlrxTs5KPI/VLm1VtV08moqtpt/Bqun22pWpzDdRJMn+6wyP51Zr46UXFuMt0f0jSqwr041abvGSTT7p6pkF/f2mmWc2oX86w29uhkkkboqivLviD8R/CfiXwNqVhpGpb7mRolELxMjECRSSMjB4BrtviHZy3/grWLaCF5ZDbFlRBksVIbgd+lfRf7OPx1/4JkSfCXwLpvx58DaJB448N6dFaX95eeE5pRcyxMQru9urLP8u3mUEnvX13DOVUMYvrM2+aElZK1tLPX1P528ceP814bmskw1ODoYmjNSlJS5ry5oPlaaScVZ6p76n1r8SrWXwv/wAEtLnTZVMctt8IrO1kUjBDNYRIwPvljVr/AIJtadLoP7Bfgi4iRmmuLXWL4Ko5Ja+uSuPwAr5n/bb/AOCj/wAK/jH8I9W+Af7O+nat4hvfFSRWd3qclg9pa2tosiO4jWTEjM2wJyqqqknJIArC/Yi/4KLeG/2bvh7Y/s//ALQvhrWLGy0GWcaNrunwfaYzbyytKY5YwQxCs77XTdwQpUFcn791qaqey5lzb2629D+RVl+LlhXjlSl7FPlc7PlUu3NtfyPlP9hXT5PEv7WPwc06JTNPD4obU5VAJIES+cWP0EJP4V+mf/BTO10bxBqn7OvgrxKI20jWvijp6X0cn3XhG2N1OexExB+tc34Z/a9/4JVfCjxVqHxW+Hlvptp4p1NJfOn0vwrfJcnzDl1jEkaxw7j127Ae9fHf7ZP7Uni79t7xro198PfDl94c8H+B1nn0WW+kCXV3eOUJmYoSqP8AuowiqWCYJLZbAipVpYSm51ZWj3fmzqweAx/EOLjhsDRdSq0koxTbtGKV/uWrPvX/AIK2eOPGPgn9k2S18HXNzaReIdftNG1We2Yqy2LxzSNHuXlVd4o0PYqxU8NivlL9g39iD9kT9pv4R2Oo+L/GutTfECL7Vcaxo+lazFE1nbi6eKB3hMLFdyKhzk53D1r1T4c/8FRvgR8Rfhu3wp/bN8B3tlqMlqlnrDyaR9u0zUtuP3xiT97E5ZQ+AjBW5VugHSfCn9qz/glR+zjPqetfBnUv7HvdZhWK8NnpGsTySorblT/SFIUAnOAQK2UlJXWx5lWlOjN06qaktGno0+zR8O/HH9kuz0T9t6T9kv4DT6r9k1NtMs2kv5xcSRpLbx3NxNKyquY4l3SEAdE75r9eviN+zpfXX7Lcv7NPwX8S23g61fR4dAj1Ce0e4aOxwBcfKjLmSZd4Ziesrnrivh34S/tqfsZ6H+1L8WP2n/F3iXXV1TxTJaaV4dgfQJpHtNOhs7dJpSVyFeWWLaBnKpHz/rCB4F+038fNW/bD/aC1vxX4R8V6/pPgTQbOHS9EEMkls0qj5mkaPIAZ5GlY5G4KIwelYYnEUsFSlXqu0Vv+R6uS5RmHEuOpZXgIudSV1FX0SV5PV6JLVv5n6l/tDfs/a58XP2NtW+DPiO/g1zxXbeHIDb38MDRC61ezjV45VViSnmyR7SMnAlYc18Lf8EUIbq6+JPxT1O7LtLBounW7lxyMzyYB+gix+FM/YE/b28Bfs4eD/F/wm/aE8T65mx1w3mi3P2Oa+d45ECyoSCSqho0cZ4PmtirP7Ln7YH7H37P3x5+O3jC38U6wnhnx5qOnX+geXoU5ZEP2ia5iMYGYwk05Vc9VAI9K1hKNRKcdU9vRnn4ilWwdSeFrJxlF2ku0o3WvmtV9588f8FLbzTr/APbV+LD3+TLbQ6XBZ4zzKtjZg9OOEL9f54r9UfET6ppH/BN3UP8AhazSPqsPwhePVBeZMpujpW0LJnkyeYVBzzu968B1b9s3/gljqfxAuPi5qvgtNW8XzTJdPqVz4SmnneZFVUceb8gZQq4OBjArxL9sb9vzV/2vdCPwX+CXhnVdD8D3VxFLrmsaoqpPfLG4dYhGjMqRh1V8bi7lVB2gHMVKlPDRlVqytHfXZf1+Z14LB4vO69HAYGjz1H7qUVrJtt3fpe19EopX2ufR1z8N/E9h+wl8MPHvwj+KOs+HbTQvA2mXep6ZaajJbWt6HhWSeRQhG2fzZZCQeHzjgjnyVPE/7PCfs53cN9o66l8Ur6U30r309zKfOMrQmTzVCjd5bNN5LMVLEMSxG2vFfhX+1x4h+Fnwauf2TvjbBqZ8C3N7F/Z3ibTIBcXNjZC4E8tuImZRKrMPlBYNHuYYddoHv2ufGH/glFqngG20my8ba5p2oWcJWO9ttI1E6lJIeSZd0RikJPY4A6KVFfL4/L6uYVpYnBcsoyhvJ3V3/KujS9F+J+68J8XZfwjltLJeJ3WpV6WIvy0o8klCKTSqyVnOEpN6JylZXTty3+g9L/Z/+H3wV/Yz+I2o629nqF/4g8DaldazqbKNrRNZO6QxZ5EakrjuzfMf4QuH+wQkui/8E0rDUFwr/wBj+JrxWbgcXF5gn/vmviv9qj9vTX/jZ8GbT4B/BbRNZj8E6Lp9rba74h1CFYLvV4rVVCoIkZlhjJRXZd7O2ADtUMG9b+CP7fP7M3w6/YfsfgVqHibV4/FMHhLU9OeFNFmeIXtyLhgvmAbSN8wG7pX0eCp0qFFUKSS5UrpdH5+Z+L8TYzH5rmFTNMdKU/bSk4zkmlOKdk43S91JWSWi20seq/sI/s7fAX4C/BZP2yvBk/i/xTqWq+C5Lu6tS8E0lsiKJLy1tokWMPIJrdkBdsnYAMZOfhr4nfGnXP2tP2gdS+PmoaMNH0axtF0bQ7FpRJJHbxhsB2HBYmWR2IGAZAoyFzXsv/BOL9vz4R/s/fBzWPhV8bdY1O2ittWa+0UwabJdqbeeNTLF8n3QJFZuevmmvm631T4ej45+OtO+C97c33w/1C6fU9Iea0e3a1RyreQUfkbDI0YJ+8IlNcWfyqRy6o6T6a+nX8D6nwjp4KrxlgoY6La5rxt0mk3BvyTXlrZvRM+s/wDgkxbG4/af+LuqAcW+gwW2f965j/8AjVe8/ta+Hf8Agml4j+MdzN+054mtbfxzZWNrbXEDanqcLJb7N8IKW/yDKyZ9cNzXx/8A8E/f2pfgv+zD8Rfi7rHxl1fUtNudfuLO305LbTJbotHFLcNIWKfd+/DjPXPtXu/xE/ap/wCCTnxY8X3fj34ieEZdd1++WJbm+ufD19vlEaLGgIVgOEVR06Cu/BR5cNTj2ivyR8lxRV9tnmNqv7VWo/vnJnwd8bfF3wl+Df7Vcfjf9j7ULYeGvClxpmpaFOZbm5imuY4o3mDG4/eMpkLqwJAwCB2r9RvCHjn9nD/gqt8CZ/Bvie0fSfFOkqt1c6ckwGoaJd7SgurVyMTQNkrkggghXCttNfEnir40/sB6f+1h8PfFHgP4d6ePhPaaJf2Ximyfw47LPcTx3CxsYJiTIVLQEMOV6jkV9QfDH9qn/glB8Ar6/wDH3whjj0jXb61a0mFloWqvdPEWV2iTzxsjUsikgMoJUZPFdJ4dz87/AIvfs0Xn7OPxh1/4O/E+2XUbiPT31LQ9UtnaKK+tdrskoTOQTscMpJ2vGy5YYY/qh/wSNtBafscabcsAou9f1WfOOoEqp/7Tr85f2nvjpq37XXxg1z43Wfhq80jw5ofh+XR/D1tcYNxLEqSkO+3guzTSuQuQvyqC2CT9R/sRft//ALL/AMBP2WfDPwu8aeJ9Yg8R2I1GW9ig0WeaNZJruaRAHXhvkaPp9K4cPUjPE1VCV7ct1e6T1vbtpb5n1Ob4SvhclwEsRQVNz9q4y5VFzheHK5O15WlzpN3921tLH5v6/p9prWn6r4maIvqF/wCKpbdJNx5R9zkY6feI561+2f8AwUV0rwle/s5+HPCHjzUrvTPDWseMPD2k6reWjIs1rbNIQ0q7wV+TaGIIPCn61+LHhyeztPD/AIav9eE0OkHxctzeTrEX2wL5W9gB97gSYHcqRX3p/wAFE/27/wBnn9o79n+L4dfC3xDq15rP/CQWV+0VxpE1uhgjSYMd7jGcuvHU1eEk5qbbv7z/AA0ObiChTw8sNCnDlvRpt6Wu5Lmv53utfI+m/Ef/AArH/glJ+y/dT+BfC3ibxaup6yT51zPGTLqU0OEkupFCiGDbbqg8tCc4HVt1eZ/8EbdW1XxdoPxm8f67IJdQ8SeKbe7vJFXaHneOWWQgdhumPHvXKzft/fsq/Gf9jq3+CHxz8T61a+JdS8Lw6VqUyaJPciHUYEAhuw68MRLFHNwe5HrXA/8ABNX9tH9nf9mL4P8AiPwx8UvEep2mt6v4lk1BI7TSJrhPswtoI0O9BjJZZOOo49a6z5891+O3hX/gk5r/AMYvFerfGXxXZr43fUZItdjOratHtu4wI2UrD8ikbQCF44r5R/Ye0f4eTf8ABTqzi+EwVvBWm6n4gk0J1klkDWCWVykDBpfnOQVOW555r37xL+0R/wAEgvGHiXU/GHibwD/aOs6xdy399dz+Hr8tPPKxZ3Yb8ZLEnp3rxf4VftH/ALH/AMKf29NQ+L/gq2l8OfDC08MtY6VHY6NMGN68MSSEw8uMkzZY9cD1oA9Y/wCCyWrW8HxO+BtveTrFbWK6neTO33VUz2oyf+/ZrwD9kbUdL8Y/t7fCAaLdx3kNtJdzO8ecK0drdSEcj0UH8a+uvir+25/wTC+N9/Yan8V9GuPE11pkLwWkt94bvGMMbNuZV2kcEjNeN2H7Sv8AwT4+Hf7UHwv+J3wa0R/DPh7w3p2v/wBuTWegXKST3NzBHDaqUYlmCgznI4G4568cU8DCpioYtt3imkump9LheKMRhMgxHD8IR9nWnGblrzJxtZLW1tOx6B/wWg1OC3uvgZY3MojhGp6pdzOc4VENkMn8Ca+GvEniWXx4+m/Dn4Zyf2xr/iu+i0q2gt87i0rhQuSOCxYL7Ase1fod8V/25v8AgmT8cpdMn+LOl3XieTR1lSxa+8N3bGASlTIF2kfe2Jn/AHRXE+E/2jP+CUngD4neG/il4C0i58P6j4ahvRBHZeGLsCWe4RIxM5YnmOMShRjrMT1ArLF5VRxuIp4irf3Nl0fqejw9x5mPDOUYzKMCopYnSU9eZK1ny2dldNq9m1e6PtD4c/s53/wa/ZWi+Avwp8Q2mja/Hostp/b0ls0qjUpx/pF7sUqzNvZygJ4CxjkLik8Mfs4ai/7Iq/sx/EvxRbeIpf8AhHJ/DbarFavCpiwy2sgjZmIeJfJ5ycmLPfFfmP8AtoftVJ+2H8ZNF0b4S+J9d0/wD4U0tmFxGJbOS4u5iDLIUyDxtijUN0CSEcNWv+wf+2P4a/ZO8ZePvAnx08Va9P4c1WO1vtKuWhmvnS5TKkBQSQHjkGT0zCBXSsZRliHhU/fSvbyPFnw5mVPJ459KnbDSm6al3klfbe2jV9rprc8E+GaavoMes/DrxLC1vrPhHUp9Nu4GPzRskjKyn6Osg/AV2tVv2gfid8JPiP8Atfal8RfgRqV5f6F41s0udVin0+S1NtfBCJSFf7wYxJIW9ZXH1s1+acSYRYXMJOO0ve+/f8bn9ueCfEE8+4RoqrfnoN0m+6ik429IOK9Uwrn7weAr2Qvf/wBgzyZ5Mvks2fqea6CvMtZ8M+G1+J+gabHoOnpbSWdzNNCtsgSQ4bBYYwcEd64MvpwqzlzScbJvTyTb6o+s4vxtfA0KLpUadVTqQptVL6OpOMItWi9rtvyWh6Dpdlo9rbh9GtbOGCQZBtkVVYevy8GprqztL6IwXtrDPGeqSoHU/ga4fxNrC6ZcS6L4Y1W+gl0+1B+waXp0UiQHBYNI7jaikY4yOPrWbB4s8Za1D4OtNP1O3tLnW4LprqU2yuAI+jhT3wCccDJ9K6I5ZXqpV1OyfV3TSs5XenZPa55NbjfLMDOWWSoOUo2XLTVOUJSdSFJxj76SanUjdT5Wle6TVjtIfD/glL97W30fRReoglaJYIvMVc8NtxkD3rbVVRQiKAFGAAMACvNtR8Vap4c1vxE8zQ3jaRo9swc26I0szbRuYqN20k525wO1WdEvPiFNdadI893c219E32t57OCOO2LJlHi2NuYA44bqPTPDq5fWnBVJ1FaytdvX3VLTTs1v3sRl/F+W4fEywWGwc/ac8lJU6cfdSquknO0tfejLWN7KLk7I7m803TtRQR6hYW90o6LNErgfmKox+EPCkLbo/DWlqc5yLOP/AArgfBGpahp/hXVte1nxe0FvLeTxxs1oJGWbeBvXklicYCYwKveH/E3iabxg2hm4v57afTHu4f7Us47eTzA2AwCAEITx8wB61UsuxFH2kadTSF7/ABJO29tLaephQ4xybMlhK+MwT9piOWyapTlFSbUHK0nJKVtHy26bp27ZvD2gudzaJYMfU2yH+lTAaZo9qSBbWVshyT8sSDPfsK5H4e6pr9/dXcHiXXZW1G2BW50yWzji8klvlkR15dCB15HP0zS1S1tfEnxWTRPEAEtjYaaLq1tJP9XNKWALFf4sAnj/AGfrWX1KftpUa1S6guZ2u9PK9r777W1O9cS4ZZdQzHLsKo1K9RUoqfJFqTbvzuDny25XePxcy5Gk9uxiTwv4hLXUK6XqZTCtIojm2+gJ5xUn/CO+H/8AoB6f/wCAqf4Vz/i+6t/A+jfaPDGk2Fpd6ldQWSusCois2cO4UDOBnH1qmmq+JvDviux8P6vri6vBqlrcSh2tkheB41LZ+TgqcY5/pShhatSHtKM7R1sm3dqKvLbTTzauViM9wOCxKwuZYZSq3pqpOEYuEZVZONNPmam+ZpX5YyUb6tLU6i10fwxcxi4s9M0uVCSA8UEbDI68gVpJGkSCONFVV4AUYArx3wxr+sab4T8J+HtEMkU+rveTSTRQpJIsaSMSEVyFLH1PQDvWzqPijx1oWkzW15EwnutSgstNvruGNWKyA7mdIyVyu3GeM5zjjFdFfKK7qOmqierSu9WlJxvb5PztrY8nKvELK44KOLlhJx/dwlNwgnCMpUo1VT5rp35ZRSbSjzNR5k3Y9JliinjaKaNJEYYZWAIP1BrFu/D3gnTkbUb/AEbRbaNMbppreJFUk4GSRgc1z/iTUPFXg7QUDeIRqd9qV7BZ2089oka27PncxCcMOOM9PeovGZ8R+GvBt5Pe+IE1aeSe3SM3GnwhUy+G+XBDA8YyMjHWscPg6nNBQqq05WVnJX2u9ul+tvK56Wb8S4P2WInicDJzw9J1J88aUlT0k4xdqju5ct0oOSV1zOOtu+ijhjiWOBEWIDCqoAUD2A4qkfDugE7jomnknv8AZk/wrlf7R8U+JvEus6To2ux6Na6H5UQItUleeRlJy27gKMdBWPB478Wa1YeFk02e1trzVLu5tbhzCHicRY+cA84xk4BHPHSnTy3Ebxmk9G9XpeLkr6dk9r+ZOM41yhe7Xw05RTlGD5YNTcKsKE1BOd1apOK99QutY3SPRp9F0e5YPc6VZysqhQXgRiAOg5HSpbSwsbBWSxs4LdWOWEUaoCffArg9P8Ra7oev65onifxPDPaWenreJfPaLGYWYhR8q8HlunOcD1qDRvFWvt4y0fTBfand6dqcczM+oWEdvv2JuDRBQGx0+8O9Dy3EOMvfTilzfas1bm0ut7dHZhT41yenWpN4aUKs6nsmrUueEnU9leSjNvlc9OaPNHzvod01joOrsbp7OwvWB2GQxpIQR2zz09KiGi+FjcG0GlaUZwu8xeRFvC+uMZx715boEvibRfh/ceLtI8SJFDBczzNYyWkbRv8AvdpBf72Tx39vetO48SPYeK9c8VpaAyW3hu3kWJuzuysFPtkjPsK6JZXVjOUKVS6V0rX3TirO9v5ltdHiUuO8vrYehicbglTnUUKkuZRa9nOFSfPFxcm7eylpJRl5HoyaFokaNGmj2Kq/DKLdAG+vHNV18JeFkl85PDelq/ZhaR5/lXK+HtR8fS3mkXk7Xd9Z3qhr5ZrWCGOFWXKtEyNuIBPfOR6VL4M1XxJdeILzTvFGuvFfW5dzphtI1jaEnCSRSD5mUfX61zTwmIpKbVZPlV3Zt9bbWv062Wq11Pbw3EOU4+ph6U8vnF1JcsXOnTil7sZp8zlyu6looOUm4zXL7rOyudQ0zTQiXd9bWoYfIJJVTIHpkiqkOk+GL9PtNvpul3CsT+8SGNwT35ArjvHVtHfePfD9s+kQaoY7K8lFpOVCSnbwCWBA5Gcn0rKEfiL4f6bcT21lbWF54m1eKC2tLcCaOyUg8gcKzHpjgcD6DSjl/PShKnUtOavb5td76JXva3Tc48x4wdDMMRSxeDU8LQk4uSTbVqcJrePJeU5qmo86lf3naN2eptY2T2wsntIWtwAPKMYKYHbbjFQw6HotvKs1vpFlFIhyrpbopB9iBXC3et+O9E0vXLm6e6ktbew8+0vby3gjkScMAYysZIYEHIJHbFS6hcfES08HxaxFqy3V1cvBPcC3skL2tsUy4jU/6xhkHn3x7ZrL6qslVjaTtu9W0n289b/5HbU4vwE3KUsBVc6VNzadOF4xjKUVa89buL5eW6tq2kpW7NvD+guxd9FsGZjkk2yEk/lSN4e0BjltEsD25tk/wri5PEutXQ8OaDoXiaO6k1zz5jq0lqgZYoxnaI+F39RyOMdKq6h4w8T6BB4p0e61OO8utHtobm2vvs6o37wqNroPlz83HHrVxy7FSajGpr2vJO3Ny31W1+j18jnr8Y5DQhKtUwj9mt5qNKUef2Pt+S8Zu8vZ6qSvTu7c53v/AAjnh/8A6AWn/wDgLH/hTv8AhH9BK7P7FsNoOcfZkxn8q4afVfHejaj4Zu9S1+2uYtauYraeyWzVFi3AHKv94nk88c9scVT8X+ONUsre/wBX8M69qN5HaThTt06L7DGN4Uo0rDc55xlSeT2FOGW4qrOMYVE+bZ3la97W201+T6MyxXGmRYDDVq+JwUoOl8UHGjzuPIqnMkqnvLlabSfNH7UUd3Lpng+BpVnsNHjMEfmyh4ohsT+82RwPc8VLb6J4YuoEuLXSdLmhlUOjx28bK47EEDBFcBq19La+JvGeqIkfnW2gwYDoHUMy5wQcgjpwan1rW/Elpovh8aFr2zVNTsbcQaZBYRMJJCoLyEn/AFaAHsMDH1xf9n1pKCjU1lbdu2sVJ7J6K++3cw/1uy2hKvKtg040nPSEYOT5a0qUbc0oXlJxsoK8m2lG70O7/wCEc8P/APQC0/8A8BY/8KP+Ec8P/wDQC0//AMBY/wDCuW1jWNTtDZ6K/iPUJdZjtFa5t9K06OZnc/xsXXai56A7fWsjSvHXinV9B8N2MVzbw6prtzcQteNCCI44T8zBPuliMY7cVlDAYucFUVTS/eW1m76ra0W9LndiOLcgwuJlhKmFfOo3so0neXNTh7P3Zu0+erCNpcqTerS1fo1pFpNjM1hYx2lvKV81oYgqMR03FRzj3p13pmm37K19YW1wUGFMsSvj6ZFeb2Mr6H488QXWteJTK1josaPfTwIpiLsCvyoADyRx1OQKsaN4q19vGekaX9v1O607UopmZtQsI7cuUQsGiCgNjp94d+M055ZVu6lOd7R5r6q/u8zs7du9mLD8cYCUYYTGYZx5qzpKC9nLl/e+yi5xU9E56NxUop31bPQLTS9NsGZ7HT7a3ZhhjFCqEj0OBVmuE8G6r4luvEV5p3ijXHhvrcu39mG0RYnhJwkkUg+ZlH1+td3Xn4yhPD1OScuZ2Tur/m0r+q0PrOHc1w+cYL6xhaTpRUnHlkoppp2d4xlLld94ytJPdIKzZ/D+m3Gu2/iOWNze2sLW8bbyFCNnPy9M8nmul/s2D++/5j/Cj+zYP77/AJj/AArGEp07uLtfT5M9LEUcPi1GNeCkotSV1e0ou6a809U+hx8/g3SJdVutXjkvIJb5Nl3HDcMkU/ylQXXoSAaiTwjpGjR2N/punzzz6HbSx2UInwWDA5X5uCTnqa7X+zYP77/mP8KP7Ng/vP8AmP8ACt1iq9knJtbWu9rWt9zt6aHmSyHKuZ1IUIxm25cyjG6k5KfMrpq/PFT21klJ3Z5h4b0PVNZ8ReI9b8S6CbOy1WCG1S1nkV2dFXDZ2nj/AOvx0zW9ong3TtAnjlsr7VGjhUpDbzXskkMYPGFQnHTp6V2P9mwf3n/T/Cj+zYP77/mP8K0rY2tWbSfLFpKyvayVlvfoceWcL5bl0YSqR9rVjKc/aTUefmnN1JaxUUlzO6SSSsuupwKfDPwxHaXdgi3ot7qUTiL7W+2GQNkPGP4Tnv6cVdTwXpIuDeTTX0901i+ntPLdMZDEzFj83ZsngjkcV2P9mwf33/Mf4Uf2bB/ff8x/hUyxuKlvUf3m9LhrI6FvZ4WCtZK0V0ba+5t27XdtzkdC8H6T4fvJ9Rtnu7i7uUEclxd3LTSFB0XLdB/hT9f8JaH4laGXUrZxcWxzDcQyNFLH9GXn8K6v+zYP77/mP8KP7Ng/vv8AmP8ACs/rNd1Pbc75u99ex0rJsrWDeXfV4+xbu4cq5b3ve3e+t9767nGJ4G0M6VdaRem8v4bwq0jXl08r5X7pVicrj2pNL8DaHpU814n2u6upoTb/AGi7uXmkSI/wqWPyj6V2n9mwf33/ADH+FH9mwf33/Mf4VTxeJaced2e+v9eRlHh7Jozp1VhYc0FaL5VdK7e/k5Sa7NtrdnEy+APDkukWOjiCeOPTGZ7SWOdkmhYkklXHPJP8vSpX8FaLc6NNoeoteX8E8gmZ7u6eSUOAMFXJyuMcY46+prsf7Ng/vv8AmP8ACj+zYP77/mP8KPreJ/ne99+t73+/X1BcPZMr2wsNYqDXKrOCjyqLWzSj7qv9nTY4seBdDk0efRL9r2/t7hlcm7u3ldCv3drE5XHtTG8BaLLpb6Td3GpXcLzRzE3F68jAp90Ak8Aegrt/7Ng/vv8AmP8ACj+zYP77/mP8KaxmJ/ne99+vf8iXw5kst8LB+7yfCvhd/dfdavR933ZxeseBdB1m/k1Ob7XbXM6CK4e0unh89BwFfafmGOKnj8H6BBNpMtvZmEaIJBZojkKm8YbI/iJ9T35rrf7Ng/vv+Y/wo/s2D++/5j/Cp+tYjlUOd2Wm/lb8nb00NFkWUKtPELDQ55tNvlV21JTT9edKX+JKW6ucfqXgnw/q1xqFzf2skr6nAltP+9YAohBXAHQggHPtRaeDtLtbux1B5766udOWVIJbi5aRgsgwwOevHSuw/s2D++/5j/Cj+zYP77/mP8KPrWI5eTndvXyt+WnoN5FlLrfWHh4c9735Ve6n7RN92p3kn0k21q2eex/CvwjFDFaLBeG1jfzGtjeSGGV85DOmcMe30ArZbwror39/qMtp5kmp262twrsSjRqMBdvQceldT/ZsH99/zH+FH9mwf33/ADH+FVPGYmprOo3833T/ADS+5GWG4cyTBrlw+EpxWj0hFbJxXTpGUkvKUu7OK0rwNpOjsotL3VTBHG0cdtJfyNDGrDB2qTxwePSpNG8FaNouotq0L3tzeGLyFlu7p5mjjznau48Cux/s2D++/wCY/wAKP7Ng/vv+Y/wpSxeInfmm9d9dyqPD+T4d03Sw0F7N3j7q916K67bK3aysc3PoOnXGt23iCWNzeWkTwxMHIUK3XjoetLrug6X4jsDp2rW/mwlg64YqyOOjKw5BHrXR/wBmwf33/Mf4Uf2bB/ff8x/hWaq1VKMlJ3jt5eh3TwGBqU6tGdKLjVbc00rSbSTcl1uklr0SOLXwPpTaZe6VeXuqXsN8qJL9qvpJGCqcgKSfl564696s6t4XsdXtba0kur+2W1XZG1rdvC23ABBKn5hgDrXV/wBmwf33/Mf4Uf2bB/ff8x/hV/Wq7kpc7utfwt+WhyLI8qVKVFYePLJKL0WqUnJJ9bKTcl5ts4qXwB4Zk0my0eOzkgi05i9rJDMyTQuTlmVwc5J6/wD1hTU+H/htNIvtHaCeSPUmV7uaSdmmmKkEbnJzwR/P1rt/7Ng/vv8AmP8ACj+zYP77/mP8Kr65irW9o977ve97/fr66mT4byNy5vqlO/LyfBH4eXk5dtuT3f8AD7u2hzN/4d0vUptOnuonZtKmE9thyArgAAn16Vkn4b+HDZXelZvvsF4/mNaC7fykbeHyg/h5Fd5/ZsH99/zH+FH9mwf33/Mf4UqeKxFNJQm0l5+d/wAzTFZDlGNnKpiMNCUpJptxV2nFRafdOKSaejSXZHIXfgzQr2XVZ54ZS+sxRwXREpG5EGFA9OB2qnc/Dnw7cXkd+rahBPFbR2iPBeyRkRIoAXKn0H413f8AZsH99/zH+FH9mwf33/Mf4U4YzEw+GbXz8kvySXyM6/DmS4rWthYS1vrFbuUpX9eaUpX7yb6nHDwXpKanDq8E9/DcxwxwSNHdOPtCIMKJf7/TqeTUD/Dvwy2jWeiLbzxw6fK01rLHOyzQuxJJVxz1P8vQV3H9mwf33/Mf4Uf2bB/ff8x/hQsZiVa03p59tvza9GOXDuSzUlLCwfNe/urXmcXL73GMn3lFPdXOFX4ceFRDfwvaTyjUokiumkuHdpNrbgxYnO7cAc+1WYPBekx3Fpdzz311cWUcsUUtxdM7hJBhgT346eldj/ZsH99/zH+FH9mwf33/ADH+FDxmJlvUf3+Vvy09BU+HMkpNOnhYK1topbS51907yXaTbWrZxujeCdG0XUTq8T3tzeeV5CS3d08zRx5ztXceBW/Wn/ZsH99/zH+FH9mwf33/ADH+FY1alSvLmqSu/M9DAYLB5XS9hgqShG7dopLV7t935n//2Q==" alt="Jugador Estrella" style="height:75px; margin-bottom:10px; display:inline-block;">
+        </a>
+        <p style="margin:8px 0; color:#ffffff; font-size:1rem;">
+          El mejor recuerdo de tus hazañas deportivas
+        </p>
+      </div>
+
+      <!-- Menú legal -->
+      <div style="margin:20px 0;">
+        <a href="https://jugadorestrella.com/store/politica-de-privacidad/" style="color:#000000; text-decoration:none; margin:0 12px;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#000000'">Política de Privacidad</a>
+        <a href="https://jugadorestrella.com/store/terminos-y-condiciones/" style="color:#000000; text-decoration:none; margin:0 12px;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#000000'">Términos y Condiciones</a>
+        <a href="https://jugadorestrella.com/store/aviso-legal/" style="color:#000000; text-decoration:none; margin:0 12px;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#000000'">Aviso Legal</a>
+        <a href="https://jugadorestrella.com/store/politica-de-envios/" style="color:#000000; text-decoration:none; margin:0 12px;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#000000'">Política de Envíos</a>
+        <a href="https://jugadorestrella.com/partners/" style="color:#000000; text-decoration:none; margin:0 12px;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#000000'">Partners</a>
+     </div>
+
+      <!-- Redes sociales -->
+      <div class="footer-social-icons" style="margin:20px 0;">
+        <a href="https://www.facebook.com/profile.php?id=100069552754476" target="_blank"><img src="https://jugadorestrella.com/store/wp-content/themes/popularfx/images/facebook2.png" alt="Facebook" width="50" height="50" style="margin:0 8px;"></a>
+        <a href="https://www.instagram.com/jugador.estrella/" target="_blank"><img src="https://jugadorestrella.com/store/wp-content/themes/popularfx/images/instagram.png" alt="Instagram" width="50" height="50" style="margin:0 8px;"></a>
+        <a href="https://wa.me/525571999695" target="_blank"><img src="https://jugadorestrella.com/store/wp-content/themes/popularfx/images/whatsapp.png" alt="WhatsApp" width="50" height="50" style="margin:0 8px;"></a>
+        <a href="https://www.tiktok.com/@jugador.estrella" target="_blank"><img src="https://jugadorestrella.com/store/wp-content/themes/popularfx/images/tiktok.png" alt="TikTok" width="50" height="50" style="margin:0 8px;"></a>
+        <a href="https://www.youtube.com/@jugadorestrella" target="_blank"><img src="https://jugadorestrella.com/store/wp-content/themes/popularfx/images/youtube.png" alt="YouTube" width="50" height="50" style="margin:0 8px;"></a>
+        <a href="https://x.com/JugadorEstrella" target="_blank"><img src="https://jugadorestrella.com/store/wp-content/themes/popularfx/images/x.png" alt="X (Twitter)" width="50" height="50" style="margin:0 8px;"></a>
+      </div>
+      <style>.footer-social-icons a{text-decoration:none;}.footer-social-icons img{transition:.2s;display:inline-block;}.footer-social-icons img:hover{transform:scale(1.1);}</style>
+
+      <!-- Copyright -->
+      <div style="margin-top:25px; border-top:1px solid #cc0000; padding-top:15px; color:#ffffff; font-size:11px;">
+        © 2026 JUGADOR ESTRELLA. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+    <!-- ==================== JS ==================== -->
+  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  document.addEventListener('DOMContentLoaded', () => {
+      // Mobile menu
+      const hamburger = document.getElementById('hamburger');
+      const navLinks = document.getElementById('navLinks');
+      hamburger.addEventListener('click', () => {
+        navLinks.classList.toggle('open');
+      });
+
+      // --------------------------------------------------------
+      // HERO VIDEO — reproducir 1 vez, luego fade a imagen
+      // En mobile/tablet se desactiva para ahorrar datos
+      // --------------------------------------------------------
+      const heroVideo = document.getElementById('heroVideo');
+      if (heroVideo) {
+        const isMobile = window.matchMedia('(max-width: 768px)').matches;
+        if (isMobile) {
+          // En mobile: ocultar video, mostrar solo la imagen de fondo
+          heroVideo.style.display = 'none';
+        } else {
+          heroVideo.addEventListener('ended', () => {
+            // Video terminó — fade suave a imagen estática
+            heroVideo.classList.add('fade-out');
+            // Opcional: remover del DOM después del fade para liberar memoria
+            setTimeout(() => heroVideo.remove(), 1400);
+          });
+          // Si el video no carga (conexión lenta), mostrar imagen
+          heroVideo.addEventListener('error', () => {
+            heroVideo.style.display = 'none';
+          });
+        }
+      }
+
+      // --------------------------------------------------------
+      // LIGHTBOX
+      // --------------------------------------------------------
+      const lightbox       = document.getElementById('lightbox');
+      const lightboxContent = document.getElementById('lightboxContent');
+      const lightboxLabel  = document.getElementById('lightboxLabel');
+      const lightboxClose  = document.getElementById('lightboxClose');
+
+      function openLightbox(imgSrc, label, icon, color) {
+        if (imgSrc) {
+          lightboxContent.innerHTML = `<img class="lightbox-img" src="${imgSrc}" alt="${label}">`;
+        } else {
+          lightboxContent.innerHTML = `
+            <div class="lightbox-ph" style="background:${color}22">
+              <span>${icon}</span>
+              <p>${label}<br><small style="opacity:.5">Imagen próximamente</small></p>
+            </div>`;
+        }
+        lightboxLabel.textContent = label;
+        lightbox.classList.add('open');
+        document.body.style.overflow = 'hidden';
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove('open');
+        document.body.style.overflow = '';
+      }
+
+      lightbox.addEventListener('click', (e) => {
+        if (e.target === lightbox) closeLightbox();
+      });
+      lightboxClose.addEventListener('click', closeLightbox);
+      document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape') closeLightbox();
+      });
+
+      // ============================================================
+// GALLERY — 65 imágenes con rotación aleatoria automática
+// ============================================================
+
+// Pool completo de imágenes por deporte
+const galleryImages = {
+  soc: [
+    'gallery/diseno01soc.jpg','gallery/diseno02soc.jpg','gallery/diseno03soc.jpg',
+    'gallery/diseno04soc.jpg','gallery/diseno05soc.jpg','gallery/diseno06soc.jpg',
+    'gallery/diseno07soc.jpg','gallery/diseno08soc.jpg','gallery/diseno09soc.jpg',
+    'gallery/diseno10soc.jpg','gallery/diseno11soc.jpg','gallery/diseno12soc.jpg',
+  ],
+  amf: [
+    'gallery/diseno01amf.jpg','gallery/diseno02amf.jpg','gallery/diseno03amf.jpg',
+    'gallery/diseno04amf.jpg','gallery/diseno05amf.jpg','gallery/diseno06amf.jpg',
+    'gallery/diseno07amf.jpg','gallery/diseno08amf.jpg','gallery/diseno09amf.jpg',
+    'gallery/diseno10amf.jpg','gallery/diseno11amf.jpg','gallery/diseno12amf.jpg',
+  ],
+  bsb: [
+    'gallery/diseno01bsb.jpg','gallery/diseno02bsb.jpg','gallery/diseno03bsb.jpg',
+    'gallery/diseno04bsb.jpg','gallery/diseno05bsb.jpg','gallery/diseno06bsb.jpg',
+    'gallery/diseno07bsb.jpg','gallery/diseno08bsb.jpg','gallery/diseno09bsb.jpg',
+    'gallery/diseno10bsb.jpg','gallery/diseno11bsb.jpg','gallery/diseno12bsb.jpg',
+  ],
+  bsk: [
+    'gallery/diseno01bsk.jpg','gallery/diseno02bsk.jpg','gallery/diseno03bsk.jpg',
+    'gallery/diseno04bsk.jpg','gallery/diseno05bsk.jpg','gallery/diseno06bsk.jpg',
+    'gallery/diseno07bsk.jpg','gallery/diseno08bsk.jpg','gallery/diseno09bsk.jpg',
+    'gallery/diseno10bsk.jpg','gallery/diseno11bsk.jpg','gallery/diseno12bsk.jpg',
+  ],
+  hok: [
+    'gallery/diseno01hok.jpg','gallery/diseno02hok.jpg','gallery/diseno03hok.jpg',
+    'gallery/diseno04hok.jpg','gallery/diseno05hok.jpg','gallery/diseno06hok.jpg',
+    'gallery/diseno07hok.jpg','gallery/diseno08hok.jpg','gallery/diseno09hok.jpg',
+    'gallery/diseno10hok.jpg','gallery/diseno11hok.jpg','gallery/diseno12hok.jpg',
+  ],
+  od: [
+    'gallery/disenood01.jpg','gallery/disenood02.jpg','gallery/disenood03.jpg',
+    'gallery/disenood04.jpg','gallery/disenood05.jpg',
+  ],
+};
+
+// Mapa de chips a claves de imagen
+const sportData = {
+  futbol:            { label: 'Fútbol',            icon: '⚽', color: '#1a7a1a', key: 'soc' },
+  beisbol:           { label: 'Béisbol',            icon: '⚾', color: '#8B4513', key: 'bsb' },
+  basquetbol:        { label: 'Basquetbol',         icon: '🏀', color: '#cc5500', key: 'bsk' },
+  'futbol-americano':{ label: 'Fútbol Americano',   icon: '🏈', color: '#2a4a8a', key: 'amf' },
+  'ice-hockey':      { label: 'Ice Hockey',         icon: '🏒', color: '#1a5a8a', key: 'hok' },
+  otros:             { label: 'Otros deportes',     icon: '✨', color: '#6a0a9a', key: 'od'  },
+};
+
+// Pool activo y estado de rotación
+let activePool = [];
+let rotateIntervals = [];
+let usedIndexes = [[], [], []]; // índices usados por tarjeta para no repetir seguido
+
+function shuffle(arr) {
+  return [...arr].sort(() => Math.random() - 0.5);
+}
+
+function getNextIndex(cardIdx, pool) {
+  // Evitar repetir la misma imagen hasta agotar el pool
+  if (usedIndexes[cardIdx].length >= pool.length) {
+    usedIndexes[cardIdx] = [];
+  }
+  let idx;
+  do {
+    idx = Math.floor(Math.random() * pool.length);
+  } while (usedIndexes[cardIdx].includes(idx));
+  usedIndexes[cardIdx].push(idx);
+  return idx;
+}
+
+function setCardImage(cardIdx, imgSrc, label, color) {
+  const card = document.getElementById('card-' + cardIdx);
+  const tag  = document.getElementById('tag-' + cardIdx);
+  if (!card) return;
+
+  const ph = card.querySelector('.preview-ph');
+
+  // Fade out
+  ph.style.transition = 'opacity 0.35s ease';
+  ph.style.opacity = '0';
+
+  setTimeout(() => {
+    ph.innerHTML = `<img src="${imgSrc}" alt="${label}"
+      style="width:100%;height:100%;object-fit:cover;position:absolute;inset:0;border-radius:inherit;">`;
+    ph.style.opacity = '1';
+  }, 350);
+
+  if (tag) {
+    tag.textContent = label;
+    tag.style.background = color;
+  }
+}
+
+function stopRotation() {
+  rotateIntervals.forEach(id => clearInterval(id));
+  rotateIntervals = [];
+}
+
+function startRotation(pool, sport) {
+  stopRotation();
+  usedIndexes = [[], [], []];
+
+  // Mostrar imagen inicial en cada tarjeta con offset
+  [0, 1, 2].forEach((cardIdx) => {
+    setTimeout(() => {
+      const idx = getNextIndex(cardIdx, pool);
+      setCardImage(cardIdx, pool[idx], sport.label, sport.color);
+    }, cardIdx * 600);
+  });
+
+  // Rotar cada tarjeta de forma independiente
+  [0, 1, 2].forEach((cardIdx) => {
+    const interval = setInterval(() => {
+      const isPaused = document.getElementById('card-' + cardIdx)?.dataset.paused === 'true';
+      if (!isPaused) {
+        const idx = getNextIndex(cardIdx, pool);
+        setCardImage(cardIdx, pool[idx], sport.label, sport.color);
+      }
+    }, 3000 + cardIdx * 500); // 3s, 3.5s, 4s — offset entre tarjetas
+    rotateIntervals.push(interval);
+  });
+}
+
+function activateSport(sportKey) {
+  const sport = sportData[sportKey] || sportData['futbol'];
+  const pool = shuffle(galleryImages[sport.key] || galleryImages.soc);
+  activePool = pool;
+  startRotation(pool, sport);
+}
+
+// Hover — pausa la tarjeta
+document.querySelectorAll('.preview-card').forEach((card, i) => {
+  card.addEventListener('mouseenter', () => { card.dataset.paused = 'true'; });
+  card.addEventListener('mouseleave', () => { card.dataset.paused = 'false'; });
+});
+
+// Chips de deportes
+const chips = document.querySelectorAll('.sport-chip');
+chips.forEach(chip => {
+  chip.addEventListener('click', () => {
+    chips.forEach(c => c.classList.remove('active'));
+    chip.classList.add('active');
+    activateSport(chip.dataset.sport);
+  });
+});
+
+// Arranque inicial con fútbol
+activateSport('futbol');
+
+      // Intersection Observer para animaciones fadeUp en scroll
+      const fadeEls = document.querySelectorAll('.vp-card, .step, .use-case, .testi-card, .price-card, .spec-row');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, i) => {
+          if (entry.isIntersecting) {
+            entry.target.style.animation = `fadeUp 0.6s ease ${i * 0.07}s forwards`;
+            entry.target.style.opacity = '0';
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12 });
+      fadeEls.forEach(el => observer.observe(el));
+
+      // ============================================================
+      // COOKIE CONSENT
+      // Bloquea GA4, Meta Pixel y GTM hasta que el usuario acepte
+      // ============================================================
+      const COOKIE_KEY = 'je_cookie_consent';
+      const COOKIE_DAYS = 180;
+
+      function setCookiePref(prefs) {
+        const expires = new Date();
+        expires.setDate(expires.getDate() + COOKIE_DAYS);
+        document.cookie = COOKIE_KEY + '=' + JSON.stringify(prefs)
+          + '; expires=' + expires.toUTCString()
+          + '; path=/; SameSite=Lax';
+      }
+
+      function getCookiePref() {
+        const match = document.cookie.match(new RegExp('(?:^|; )' + COOKIE_KEY + '=([^;]*)'));
+        try { return match ? JSON.parse(decodeURIComponent(match[1])) : null; }
+        catch(e) { return null; }
+      }
+
+      function hideCookieBar() {
+        const bar = document.getElementById('cookieBar');
+        if (bar) bar.style.display = 'none';
+      }
+
+      // GA4 — tu Measurement ID
+      function loadGA4() {
+        const GA_ID = 'G-JQEJ62GB3T';
+        if (window._ga4Loaded) return;
+        window._ga4Loaded = true;
+        const s = document.createElement('script');
+        s.src = 'https://www.googletagmanager.com/gtag/js?id=' + GA_ID;
+        s.async = true;
+        document.head.appendChild(s);
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        window.gtag = gtag;
+        gtag('js', new Date());
+        gtag('config', GA_ID);
+      }
+
+      // Meta Pixel (Facebook)
+      function loadMetaPixel() {
+        const PIXEL_ID = '1816218159068621';
+        if (window._pixelLoaded) return;
+        window._pixelLoaded = true;
+        !function(f,b,e,v,n,t,s){
+          if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+          n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+          if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+          n.queue=[];t=b.createElement(e);t.async=!0;
+          t.src=v;s=b.getElementsByTagName(e)[0];
+          s.parentNode.insertBefore(t,s)}(window,document,'script',
+          'https://connect.facebook.net/en_US/fbevents.js');
+        fbq('init', PIXEL_ID);
+        fbq('track', 'PageView');
+      }
+
+      // GTM — GTM Container ID
+      function loadGTM() {
+        const GTM_ID = 'GTM-MSCCBS57';
+        if (window._gtmLoaded) return;
+        window._gtmLoaded = true;
+        (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+        new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+        j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;
+        j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
+        f.parentNode.insertBefore(j,f);
+        })(window,document,'script','dataLayer',GTM_ID);
+      }
+
+      function applyConsent(prefs) {
+        if (prefs.analytics) loadGA4();
+        if (prefs.marketing) loadMetaPixel();
+        if (prefs.gtm)       loadGTM();
+        hideCookieBar();
+      }
+
+      function acceptAll() {
+        const prefs = { analytics: true, marketing: true, gtm: true };
+        setCookiePref(prefs);
+        applyConsent(prefs);
+      }
+
+      function rejectAll() {
+        const prefs = { analytics: false, marketing: false, gtm: false };
+        setCookiePref(prefs);
+        applyConsent(prefs);
+      }
+
+      function savePreferences() {
+        const prefs = {
+          analytics: document.getElementById('toggleAnalytics').checked,
+          marketing: document.getElementById('toggleMarketing').checked,
+          gtm:       document.getElementById('toggleGTM').checked,
+        };
+        setCookiePref(prefs);
+        applyConsent(prefs);
+        document.getElementById('cookieModal').classList.remove('open');
+      }
+
+      // Al cargar: revisar si ya hay preferencia guardada
+      const savedPrefs = getCookiePref();
+      if (savedPrefs) {
+        applyConsent(savedPrefs);
+      } else {
+        // Mostrar barra después de 1.5 seg
+        setTimeout(() => {
+          const bar = document.getElementById('cookieBar');
+          if (bar) bar.style.display = 'flex';
+        }, 1500);
+      }
+
+      // Listeners barra
+      document.getElementById('cookieAccept').addEventListener('click', acceptAll);
+      document.getElementById('cookieReject').addEventListener('click', rejectAll);
+      document.getElementById('cookieSettings').addEventListener('click', () => {
+        document.getElementById('cookieModal').classList.add('open');
+      });
+      // Listeners modal
+      document.getElementById('cookieModalSave').addEventListener('click', savePreferences);
+      document.getElementById('cookieModalReject').addEventListener('click', () => {
+        rejectAll();
+        document.getElementById('cookieModal').classList.remove('open');
+      });
+      document.getElementById('cookieModal').addEventListener('click', (e) => {
+        if (e.target === document.getElementById('cookieModal'))
+          document.getElementById('cookieModal').classList.remove('open');
+      });
+
+  
+  });
+  
+  // ============================================================
+// PRODUCT BANNER CAROUSEL
+// ============================================================
+(function() {
+  const slides = document.querySelectorAll('.product-banner-slide');
+  const dots   = document.querySelectorAll('.carousel-dot');
+  let current  = 0;
+  let timer    = null;
+  const INTERVAL = 5000;
+  
+  // Precarga para evitar delay
+['images/banner-02.jpg','images/banner-03.jpg'].forEach(src => {
+  const img = new Image();
+  img.src = src;
+});
+
+  function goTo(idx) {
+    slides[current].classList.remove('active');
+    dots[current].classList.remove('active');
+    current = idx;
+    slides[current].classList.add('active');
+    dots[current].classList.add('active');
+  }
+
+  function next() {
+    goTo((current + 1) % slides.length);
+  }
+
+  function startAuto() {
+    timer = setInterval(next, INTERVAL);
+  }
+
+  function stopAuto() {
+    clearInterval(timer);
+  }
+
+  // Dots clickeables
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      stopAuto();
+      goTo(parseInt(dot.dataset.slide));
+      startAuto();
+    });
+  });
+
+  // Pausa en hover
+  const banner = document.querySelector('.product-banner');
+  banner.addEventListener('mouseenter', stopAuto);
+  banner.addEventListener('mouseleave', startAuto);
+
+  startAuto();
+})();
+  
+</script>
+
+  <!-- ==================== LIGHTBOX ==================== -->
+  <div class="lightbox-overlay" id="lightbox" role="dialog" aria-modal="true">
+    <span class="lightbox-close" id="lightboxClose" aria-label="Cerrar">✕</span>
+    <div id="lightboxContent"></div>
+    <div class="lightbox-label" id="lightboxLabel"></div>
+  </div>
+
+  <!-- ==================== COOKIE CONSENT ==================== -->
+  <div class="cookie-bar" id="cookieBar" role="region">
+    <div class="cookie-bar-text">
+      <p>
+        <strong>🍪 Usamos cookies</strong> para analizar el tráfico (GA4), personalizar anuncios
+        (Meta Pixel) y optimizar tu experiencia (GTM). Al aceptar nos ayudas a mejorar el sitio.
+        Consulta nuestra <a href="https://jugadorestrella.com/store/politica-de-privacidad/" target="_blank">Política de Privacidad</a>.
+      </p>
+    </div>
+    <div class="cookie-bar-actions">
+      <button class="cookie-btn cookie-btn-reject" id="cookieReject">Solo esenciales</button>
+      <button class="cookie-btn cookie-btn-settings" id="cookieSettings">Personalizar</button>
+      <button class="cookie-btn cookie-btn-accept" id="cookieAccept">Aceptar todo</button>
+    </div>
+  </div>
+
+  <!-- Modal preferencias de cookies -->
+  <div class="cookie-modal-overlay" id="cookieModal" role="dialog" aria-modal="true">
+    <div class="cookie-modal">
+      <h3>🍪 Preferencias de cookies</h3>
+      <p>Elige qué tipos de cookies quieres permitir. Puedes cambiar tus preferencias en cualquier momento.</p>
+      <div class="cookie-category">
+        <div class="cookie-category-header">
+          <strong>Esenciales</strong>
+          <label class="cookie-toggle"><input type="checkbox" checked disabled><span class="cookie-toggle-slider"></span></label>
+        </div>
+        <p>Necesarias para el funcionamiento básico del sitio. No se pueden desactivar.</p>
+      </div>
+      <div class="cookie-category">
+        <div class="cookie-category-header">
+          <strong>Analíticas — Google Analytics GA4</strong>
+          <label class="cookie-toggle"><input type="checkbox" id="toggleAnalytics" checked><span class="cookie-toggle-slider"></span></label>
+        </div>
+        <p>Nos permiten entender cómo los visitantes usan el sitio para mejorar la experiencia.</p>
+      </div>
+      <div class="cookie-category">
+        <div class="cookie-category-header">
+          <strong>Marketing — Meta Pixel (Facebook)</strong>
+          <label class="cookie-toggle"><input type="checkbox" id="toggleMarketing" checked><span class="cookie-toggle-slider"></span></label>
+        </div>
+        <p>Permiten mostrar anuncios relevantes en Facebook e Instagram.</p>
+      </div>
+      <div class="cookie-category">
+        <div class="cookie-category-header">
+          <strong>Gestión de etiquetas — Google Tag Manager</strong>
+          <label class="cookie-toggle"><input type="checkbox" id="toggleGTM" checked><span class="cookie-toggle-slider"></span></label>
+        </div>
+        <p>Permite gestionar y cargar scripts de terceros de forma centralizada.</p>
+      </div>
+      <div class="cookie-modal-footer">
+        <button class="cookie-btn cookie-btn-reject" id="cookieModalReject">Solo esenciales</button>
+        <button class="cookie-btn cookie-btn-accept" id="cookieModalSave">Guardar preferencias</button>
+      </div>
+    </div>
+  </div>
+
+</body>
+</html>

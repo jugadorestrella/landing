@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Partners & Embajadores — Jugador Estrella</title>
+  <meta name="description" content="Conoce a las marcas partners e influencers embajadores de Jugador Estrella." />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,400;0,500;0,600;0,700;0,800;0,900;1,400&family=Open+Sans:wght@400;500;600;700&family=Oswald:wght@600;700;800&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --red:        #ff0000;
+      --red-dark:   #cc0000;
+      --black:      #111111;
+      --white:      #FFFFFF;
+      --gray-light: #F5F5F5;
+      --gray-mid:   #DDDDDD;
+      --gray-text:  #555555;
+      --gold:       #F5C518;
+      --font-head:  'Oswald', 'Montserrat', sans-serif;
+      --font-cond:  'Montserrat', sans-serif;
+      --font-body:  'Open Sans', sans-serif;
+      --radius:     6px;
+      --shadow:     0 4px 24px rgba(0,0,0,0.12);
+      --shadow-lg:  0 12px 48px rgba(0,0,0,0.18);
+      --transition: 0.25s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      color: var(--black);
+      background: var(--white);
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+    img { display: block; max-width: 100%; height: auto; }
+    a { text-decoration: none; color: inherit; }
+
+    .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+    .btn {
+      display: inline-block;
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 1rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      padding: 14px 36px;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background var(--transition), transform var(--transition), box-shadow var(--transition);
+      border: none;
+      text-decoration: none;
+    }
+    .btn-outline {
+      background: transparent;
+      color: var(--white);
+      border: 2px solid var(--white);
+    }
+    .btn-outline:hover { background: var(--white); color: var(--red); transform: translateY(-2px); }
+
+    .section-label {
+      font-family: var(--font-cond);
+      font-size: 0.75rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--red);
+      display: block;
+      margin-bottom: 10px;
+    }
+    .section-title {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      line-height: 1.1;
+      text-transform: uppercase;
+    }
+    .section-sub {
+      font-size: 1.05rem;
+      color: var(--gray-text);
+      line-height: 1.6;
+      margin-top: 12px;
+    }
+
+    /* ── PAGE HERO ── */
+    .partners-hero {
+      background: var(--black);
+      position: relative;
+      padding: 80px 0 60px;
+      overflow: hidden;
+      text-align: center;
+    }
+    .partners-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(ellipse 70% 90% at 50% 50%, rgba(255,0,0,0.12) 0%, transparent 70%),
+        repeating-linear-gradient(-45deg, transparent, transparent 40px,
+          rgba(255,255,255,0.015) 40px, rgba(255,255,255,0.015) 41px);
+    }
+    .partners-hero .container { position: relative; z-index: 2; }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--red);
+      color: var(--white);
+      font-family: var(--font-cond);
+      font-size: 0.78rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 6px 14px;
+      border-radius: 100px;
+      margin-bottom: 22px;
+    }
+    .hero-badge::before { content: '★'; font-size: 0.9rem; }
+    .partners-hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 5vw, 3.6rem);
+      font-weight: 700;
+      color: var(--white);
+      text-transform: uppercase;
+      line-height: 1.0;
+      margin-bottom: 20px;
+    }
+    .partners-hero h1 em { font-style: normal; color: var(--gold); }
+    .partners-hero p {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,0.75);
+      max-width: 560px;
+      margin: 0 auto;
+      line-height: 1.65;
+    }
+    .hero-divider { width: 60px; height: 4px; background: var(--red); margin: 28px auto 0; border-radius: 2px; }
+
+    /* ── SECTION HEADER ── */
+    .section-header { text-align: center; margin-bottom: 52px; }
+    .section-header .section-title { margin-bottom: 14px; }
+    .section-header .section-sub { max-width: 560px; margin: 0 auto; }
+
+    /* ── MARCAS PARTNERS ── */
+    .brands-section { padding: 80px 0; background: var(--white); }
+    .partners-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
+
+    .partner-card {
+      position: relative;
+      background: var(--white);
+      border: 1px solid var(--gray-mid);
+      border-radius: 12px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 32px 20px 24px;
+      text-align: center;
+      transition: box-shadow var(--transition), transform var(--transition), border-color var(--transition);
+      cursor: pointer;
+    }
+    .partner-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-6px); border-color: var(--red); }
+    .partner-card::before {
+      content: '';
+      position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: var(--red);
+      transform: scaleX(0); transform-origin: left;
+      transition: transform var(--transition);
+    }
+    .partner-card:hover::before { transform: scaleX(1); }
+
+    .partner-img-wrap {
+      width: 120px; height: 120px;
+      border-radius: 50%;
+      background: var(--gray-light);
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 18px;
+      overflow: hidden;
+      border: 3px solid var(--gray-mid);
+      transition: border-color var(--transition);
+      flex-shrink: 0;
+    }
+    .partner-card:hover .partner-img-wrap { border-color: var(--red); }
+    .partner-img-wrap img { width: 100%; height: 100%; object-fit: contain; padding: 8px; }
+    .partner-img-ph { font-size: 3rem; opacity: 0.35; }
+
+    .partner-name {
+      font-family: var(--font-head);
+      font-size: 1rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.06em;
+      color: var(--black); margin-bottom: 6px;
+      transition: color var(--transition);
+    }
+    .partner-card:hover .partner-name { color: var(--red); }
+    .partner-desc { font-size: 0.82rem; color: var(--gray-text); line-height: 1.5; margin-bottom: 16px; }
+
+    .partner-link-btn {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--font-cond); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--red); border: 1.5px solid var(--red);
+      border-radius: 100px; padding: 6px 16px;
+      transition: background var(--transition), color var(--transition);
+    }
+    .partner-link-btn:hover { background: var(--red); color: var(--white); }
+    .partner-link-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+
+    /* ── DIVIDER ── */
+    .section-divider { background: var(--black); padding: 20px 0; text-align: center; }
+    .section-divider p {
+      font-family: var(--font-cond); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,255,255,0.4);
+    }
+
+    /* ── INFLUENCERS ── */
+    .influencers-section { padding: 80px 0; background: var(--gray-light); }
+    .influencers-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; }
+
+    .influencer-card {
+      position: relative;
+      background: var(--white);
+      border-radius: 14px;
+      overflow: hidden;
+      box-shadow: 0 2px 16px rgba(0,0,0,0.08);
+      transition: box-shadow var(--transition), transform var(--transition);
+      cursor: pointer;
+      display: block;
+    }
+    .influencer-card:hover { box-shadow: var(--shadow-lg); transform: translateY(-8px); }
+
+    .influencer-img-wrap {
+      width: 100%; height: 220px;
+      background: var(--gray-mid);
+      position: relative; overflow: hidden;
+    }
+    .influencer-img-wrap img {
+      width: 100%; height: 100%;
+      object-fit: cover; object-position: top center;
+      transition: transform 0.4s ease;
+    }
+    .influencer-card:hover .influencer-img-wrap img { transform: scale(1.06); }
+    .influencer-img-wrap::after {
+      content: '';
+      position: absolute; bottom: 0; left: 0; right: 0; height: 50%;
+      background: linear-gradient(to top, rgba(0,0,0,0.35), transparent);
+    }
+    .influencer-img-ph {
+      width: 100%; height: 100%;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px;
+      background: linear-gradient(135deg, var(--gray-light) 0%, var(--gray-mid) 100%);
+      font-size: 3.5rem;
+    }
+    .influencer-img-ph small {
+      font-family: var(--font-cond); font-size: 0.75rem;
+      color: var(--gray-text); letter-spacing: 0.08em; text-transform: uppercase;
+    }
+
+    .platform-badge {
+      position: absolute; top: 12px; left: 12px; z-index: 3;
+      background: var(--black); color: var(--white);
+      font-family: var(--font-cond); font-size: 0.7rem; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 4px 10px; border-radius: 100px;
+    }
+    .platform-badge.ig { background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045); }
+    .platform-badge.yt { background: #ff0000; }
+    .platform-badge.tt { background: #010101; }
+    .platform-badge.fb { background: #1877f2; }
+
+    .influencer-body { padding: 24px 20px 20px; }
+    .influencer-name {
+      font-family: var(--font-head); font-size: 1.15rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: 0.04em; color: var(--black);
+      margin-bottom: 4px; transition: color var(--transition);
+    }
+    .influencer-card:hover .influencer-name { color: var(--red); }
+    .influencer-handle { font-family: var(--font-cond); font-size: 0.82rem; color: var(--red); font-weight: 600; margin-bottom: 10px; }
+    .influencer-bio { font-size: 0.88rem; color: var(--gray-text); line-height: 1.55; margin-bottom: 16px; }
+
+    .influencer-stats { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+    .i-stat strong { display: block; font-family: var(--font-head); font-size: 1.05rem; font-weight: 700; color: var(--black); line-height: 1; }
+    .i-stat span { font-size: 0.72rem; color: var(--gray-text); text-transform: uppercase; letter-spacing: 0.08em; }
+
+    .influencer-link-btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 6px; width: 100%;
+      font-family: var(--font-cond); font-size: 0.78rem; font-weight: 700;
+      letter-spacing: 0.1em; text-transform: uppercase;
+      background: var(--black); color: var(--white);
+      border-radius: 100px; padding: 8px 18px;
+      transition: background var(--transition);
+    }
+    .influencer-link-btn:hover { background: var(--red); }
+    .influencer-link-btn svg { width: 12px; height: 12px; }
+
+    /* ── JOIN CTA ── */
+    .join-cta { background: var(--red); padding: 64px 0; text-align: center; }
+    .join-cta h2 {
+      font-family: var(--font-head);
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700; text-transform: uppercase;
+      color: var(--white); line-height: 1.1; margin-bottom: 16px;
+    }
+    .join-cta h2 em { font-style: normal; color: var(--gold); }
+    .join-cta p {
+      font-size: 1.05rem; color: rgba(255,255,255,0.85);
+      line-height: 1.6; margin: 0 auto 32px; max-width: 580px;
+    }
+    .join-cta-actions { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
+    .btn-wsp {
+      display: inline-block;
+      font-family: var(--font-head); font-weight: 700; font-size: 1rem;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      padding: 14px 36px; border-radius: var(--radius);
+      background: var(--white); color: var(--black);
+      transition: background var(--transition), transform var(--transition);
+    }
+    .btn-wsp:hover { background: var(--gold); transform: translateY(-2px); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .partner-card, .influencer-card { opacity: 0; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 1024px) {
+      .partners-grid { grid-template-columns: repeat(3, 1fr); }
+      .influencers-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .partners-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+      .influencers-grid { grid-template-columns: 1fr; }
+      .partner-img-wrap { width: 90px; height: 90px; }
+      .join-cta-actions { flex-direction: column; align-items: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ══════════════════════════════════════════════
+       AQUÍ VA TU HEADER (cópialo del index)
+  ══════════════════════════════════════════════ -->
+
+  <!-- ==================== PAGE HERO ==================== -->
+  <section class="partners-hero">
+    <div class="container">
+      <div class="hero-badge">Comunidad Jugador Estrella</div>
+      <h1>Nuestros <em>Partners</em><br>&amp; Embajadores</h1>
+      <p>Marcas líderes e influencers que comparten nuestra pasión por el deporte y llevan la experiencia Jugador Estrella a más familias de México.</p>
+      <div class="hero-divider"></div>
+    </div>
+  </section>
+
+  <!-- ==================== MARCAS PARTNERS ==================== -->
+  <section class="brands-section" id="marcas">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="section-label">Marcas aliadas</span>
+        <h2 class="section-title">Marcas <em style="font-style:normal;color:var(--red);">Partners</em></h2>
+        <p class="section-sub">Colaboramos con marcas que comparten nuestros valores: calidad, pasión por el deporte y amor por el talento juvenil.</p>
+      </div>
+
+      <div class="partners-grid">
+
+        <!--
+          ════════════════════════════════════════════════════
+          CÓMO EDITAR CADA TARJETA DE PARTNER:
+          1. href=""       → URL del sitio web de la marca
+          2. Descomenta la línea <img src="..."> y ajusta la ruta
+          3. .partner-name → Nombre de la marca
+          4. .partner-desc → Descripción corta (1–2 líneas)
+          ════════════════════════════════════════════════════
+        -->
+
+        <a href="#" target="_blank" rel="noopener" class="partner-card">
+          <div class="partner-img-wrap">
+            <!-- <img src="images/partners/marca-01.png" alt="Nombre Marca"> -->
+            <span class="partner-img-ph">🏅</span>
+          </div>
+          <div class="partner-name">Nombre Marca</div>
+          <p class="partner-desc">Descripción corta de la marca partner y por qué colaboran.</p>
+          <span class="partner-link-btn">Visitar sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="partner-card">
+          <div class="partner-img-wrap">
+            <!-- <img src="images/partners/marca-02.png" alt="Nombre Marca"> -->
+            <span class="partner-img-ph">⚽</span>
+          </div>
+          <div class="partner-name">Nombre Marca</div>
+          <p class="partner-desc">Descripción corta de la marca partner y por qué colaboran.</p>
+          <span class="partner-link-btn">Visitar sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="partner-card">
+          <div class="partner-img-wrap">
+            <!-- <img src="images/partners/marca-03.png" alt="Nombre Marca"> -->
+            <span class="partner-img-ph">🏀</span>
+          </div>
+          <div class="partner-name">Nombre Marca</div>
+          <p class="partner-desc">Descripción corta de la marca partner y por qué colaboran.</p>
+          <span class="partner-link-btn">Visitar sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="partner-card">
+          <div class="partner-img-wrap">
+            <!-- <img src="images/partners/marca-04.png" alt="Nombre Marca"> -->
+            <span class="partner-img-ph">🏈</span>
+          </div>
+          <div class="partner-name">Nombre Marca</div>
+          <p class="partner-desc">Descripción corta de la marca partner y por qué colaboran.</p>
+          <span class="partner-link-btn">Visitar sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="partner-card">
+          <div class="partner-img-wrap">
+            <!-- <img src="images/partners/marca-05.png" alt="Nombre Marca"> -->
+            <span class="partner-img-ph">⚾</span>
+          </div>
+          <div class="partner-name">Nombre Marca</div>
+          <p class="partner-desc">Descripción corta de la marca partner y por qué colaboran.</p>
+          <span class="partner-link-btn">Visitar sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="partner-card">
+          <div class="partner-img-wrap">
+            <!-- <img src="images/partners/marca-06.png" alt="Nombre Marca"> -->
+            <span class="partner-img-ph">🥇</span>
+          </div>
+          <div class="partner-name">Nombre Marca</div>
+          <p class="partner-desc">Descripción corta de la marca partner y por qué colaboran.</p>
+          <span class="partner-link-btn">Visitar sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="partner-card">
+          <div class="partner-img-wrap">
+            <!-- <img src="images/partners/marca-07.png" alt="Nombre Marca"> -->
+            <span class="partner-img-ph">🏒</span>
+          </div>
+          <div class="partner-name">Nombre Marca</div>
+          <p class="partner-desc">Descripción corta de la marca partner y por qué colaboran.</p>
+          <span class="partner-link-btn">Visitar sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="partner-card">
+          <div class="partner-img-wrap">
+            <!-- <img src="images/partners/marca-08.png" alt="Nombre Marca"> -->
+            <span class="partner-img-ph">🎽</span>
+          </div>
+          <div class="partner-name">Nombre Marca</div>
+          <p class="partner-desc">Descripción corta de la marca partner y por qué colaboran.</p>
+          <span class="partner-link-btn">Visitar sitio <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== DIVIDER ==================== -->
+  <div class="section-divider">
+    <p>★ &nbsp; Embajadores de marca &nbsp; ★</p>
+  </div>
+
+  <!-- ==================== INFLUENCERS ==================== -->
+  <section class="influencers-section" id="embajadores">
+    <div class="container">
+
+      <div class="section-header">
+        <span class="section-label">Embajadores de marca</span>
+        <h2 class="section-title">Influencers <em style="font-style:normal;color:var(--red);">Embajadores</em></h2>
+        <p class="section-sub">Creadores de contenido deportivo que confían en Jugador Estrella y comparten su experiencia con su comunidad.</p>
+      </div>
+
+      <div class="influencers-grid">
+
+        <!--
+          ════════════════════════════════════════════════════
+          CÓMO EDITAR CADA TARJETA DE INFLUENCER:
+          1. href=""                → URL de su perfil/canal
+          2. .platform-badge class → ig | yt | tt | fb
+          3. Descomenta <img src="..."> y ajusta la ruta
+          4. .influencer-name      → Nombre artístico
+          5. .influencer-handle    → @handle
+          6. .influencer-bio       → Descripción corta
+          7. i-stat strong         → Número de seguidores
+          ════════════════════════════════════════════════════
+        -->
+
+        <a href="#" target="_blank" rel="noopener" class="influencer-card">
+          <div class="influencer-img-wrap">
+            <!-- <img src="images/influencers/influencer-01.jpg" alt="Nombre Influencer"> -->
+            <div class="influencer-img-ph">📸<br><small>Foto del embajador</small></div>
+            <span class="platform-badge ig">📷 Instagram</span>
+          </div>
+          <div class="influencer-body">
+            <div class="influencer-name">Nombre Influencer</div>
+            <div class="influencer-handle">@handle</div>
+            <p class="influencer-bio">Descripción breve: deporte, tipo de contenido y por qué es embajador de Jugador Estrella.</p>
+            <div class="influencer-stats">
+              <div class="i-stat"><strong>00K</strong><span>Seguidores</span></div>
+              <div class="i-stat"><strong>⚽</strong><span>Fútbol</span></div>
+            </div>
+            <span class="influencer-link-btn">Ver perfil <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="influencer-card">
+          <div class="influencer-img-wrap">
+            <!-- <img src="images/influencers/influencer-02.jpg" alt="Nombre Influencer"> -->
+            <div class="influencer-img-ph">🎬<br><small>Foto del embajador</small></div>
+            <span class="platform-badge yt">▶ YouTube</span>
+          </div>
+          <div class="influencer-body">
+            <div class="influencer-name">Nombre Influencer</div>
+            <div class="influencer-handle">@handle</div>
+            <p class="influencer-bio">Descripción breve: deporte, tipo de contenido y por qué es embajador de Jugador Estrella.</p>
+            <div class="influencer-stats">
+              <div class="i-stat"><strong>00K</strong><span>Suscriptores</span></div>
+              <div class="i-stat"><strong>🏀</strong><span>Basquetbol</span></div>
+            </div>
+            <span class="influencer-link-btn">Ver canal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="influencer-card">
+          <div class="influencer-img-wrap">
+            <!-- <img src="images/influencers/influencer-03.jpg" alt="Nombre Influencer"> -->
+            <div class="influencer-img-ph">🎵<br><small>Foto del embajador</small></div>
+            <span class="platform-badge tt">♪ TikTok</span>
+          </div>
+          <div class="influencer-body">
+            <div class="influencer-name">Nombre Influencer</div>
+            <div class="influencer-handle">@handle</div>
+            <p class="influencer-bio">Descripción breve: deporte, tipo de contenido y por qué es embajador de Jugador Estrella.</p>
+            <div class="influencer-stats">
+              <div class="i-stat"><strong>00K</strong><span>Seguidores</span></div>
+              <div class="i-stat"><strong>⚾</strong><span>Béisbol</span></div>
+            </div>
+            <span class="influencer-link-btn">Ver TikTok <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="influencer-card">
+          <div class="influencer-img-wrap">
+            <!-- <img src="images/influencers/influencer-04.jpg" alt="Nombre Influencer"> -->
+            <div class="influencer-img-ph">📸<br><small>Foto del embajador</small></div>
+            <span class="platform-badge ig">📷 Instagram</span>
+          </div>
+          <div class="influencer-body">
+            <div class="influencer-name">Nombre Influencer</div>
+            <div class="influencer-handle">@handle</div>
+            <p class="influencer-bio">Descripción breve: deporte, tipo de contenido y por qué es embajador de Jugador Estrella.</p>
+            <div class="influencer-stats">
+              <div class="i-stat"><strong>00K</strong><span>Seguidores</span></div>
+              <div class="i-stat"><strong>🏈</strong><span>Fút. Am.</span></div>
+            </div>
+            <span class="influencer-link-btn">Ver perfil <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="influencer-card">
+          <div class="influencer-img-wrap">
+            <!-- <img src="images/influencers/influencer-05.jpg" alt="Nombre Influencer"> -->
+            <div class="influencer-img-ph">🎬<br><small>Foto del embajador</small></div>
+            <span class="platform-badge yt">▶ YouTube</span>
+          </div>
+          <div class="influencer-body">
+            <div class="influencer-name">Nombre Influencer</div>
+            <div class="influencer-handle">@handle</div>
+            <p class="influencer-bio">Descripción breve: deporte, tipo de contenido y por qué es embajador de Jugador Estrella.</p>
+            <div class="influencer-stats">
+              <div class="i-stat"><strong>00K</strong><span>Suscriptores</span></div>
+              <div class="i-stat"><strong>🏒</strong><span>Hockey</span></div>
+            </div>
+            <span class="influencer-link-btn">Ver canal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a href="#" target="_blank" rel="noopener" class="influencer-card">
+          <div class="influencer-img-wrap">
+            <!-- <img src="images/influencers/influencer-06.jpg" alt="Nombre Influencer"> -->
+            <div class="influencer-img-ph">🎵<br><small>Foto del embajador</small></div>
+            <span class="platform-badge tt">♪ TikTok</span>
+          </div>
+          <div class="influencer-body">
+            <div class="influencer-name">Nombre Influencer</div>
+            <div class="influencer-handle">@handle</div>
+            <p class="influencer-bio">Descripción breve: deporte, tipo de contenido y por qué es embajador de Jugador Estrella.</p>
+            <div class="influencer-stats">
+              <div class="i-stat"><strong>00K</strong><span>Seguidores</span></div>
+              <div class="i-stat"><strong>⚽</strong><span>Fútbol</span></div>
+            </div>
+            <span class="influencer-link-btn">Ver TikTok <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== JOIN CTA ==================== -->
+  <section class="join-cta">
+    <div class="container">
+      <h2>¿Quieres ser<br><em>Partner o Embajador</em>?</h2>
+      <p>Si tienes una marca deportiva o creas contenido sobre deporte y quieres colaborar con nosotros, contáctanos. Juntos llevamos la experiencia Jugador Estrella a más familias de México.</p>
+      <div class="join-cta-actions">
+        <a href="mailto:contacto@jugadorestrella.com" class="btn btn-outline">📧 Escribir al equipo</a>
+        <a href="https://wa.me/525571999695" target="_blank" class="btn-wsp">💬 WhatsApp</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══════════════════════════════════════════════
+       AQUÍ VA TU FOOTER (cópialo del index)
+  ══════════════════════════════════════════════ -->
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const cards = document.querySelectorAll('.partner-card, .influencer-card');
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            const idx = Array.from(cards).indexOf(entry.target) % 4;
+            entry.target.style.animation = `fadeUp 0.55s ease ${idx * 0.08}s forwards`;
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      cards.forEach(card => observer.observe(card));
+    });
+  </script>
+
+</body>
+</html>

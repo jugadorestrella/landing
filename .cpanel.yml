@@ -1,0 +1,8 @@
+---
+deployment:
+  tasks:
+    # Copia los archivos de la landing a la raiz publica del dominio.
+    # NO borra nada en el servidor (WordPress en /store queda intacto).
+    - export DEPLOYPATH=$HOME/public_html/
+    - /bin/cp -f index.html partners.html favicon.ico apple-touch-icon.png icon-192.png icon-512.png icon.svg site.webmanifest $DEPLOYPATH
+    - /bin/cp -Rf images gallery videos descargas $DEPLOYPATH
