@@ -2,7 +2,7 @@
 # Auto-publicacion: lo ejecuta un cron en cPanel cada 15 min.
 # Solo copia si hay cambios nuevos en GitHub. Nunca borra archivos del servidor.
 REPO="$HOME/repositories/landing"
-DEST="$HOME/public_html"
+DEST="$HOME/public_html/jugadorestrella.com"
 cd "$REPO" || exit 1
 OLD=$(git rev-parse HEAD)
 git pull -q origin main || exit 1
