@@ -39,8 +39,9 @@
       overflow-x: hidden;
       -webkit-font-smoothing: antialiased;
     }
-    img { display: block; max-width: 100%; height: auto; }
+  img { display: block; max-width: 100%; height: auto; }
     a { text-decoration: none; color: inherit; }
+    ul, ol, li { list-style: none !important; list-style-type: none !important; } /* <--- SOLUCIÓN */
 
     .container { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
 
@@ -87,6 +88,114 @@
       color: var(--gray-text);
       line-height: 1.6;
       margin-top: 12px;
+    }
+    
+     /* ============================================
+       ANNOUNCEMENT BAR
+    ============================================ */
+    .announcement-bar {
+      background: var(--black);
+      color: var(--white);
+      text-align: center;
+      padding: 10px 16px;
+      font-family: var(--font-cond);
+      font-size: 0.9rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+    }
+    .announcement-bar span {
+      color: var(--gold);
+      font-weight: 700;
+    }
+    
+     /* ============================================
+       HEADER / NAV
+    ============================================ */
+    header {
+      background: var(--red);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 2px 12px rgba(0,0,0,0.25);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 24px;
+      max-width: 1140px;
+      margin: 0 auto;
+    }
+    .nav-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .nav-logo .logo-main {
+      font-family: var(--font-head);
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    /* ---- NOTA: Reemplaza este texto-logo por tu imagen SVG/PNG cuando lo tengas
+              Ejemplo: <img src="images/logo.png" alt="Jugador Estrella" height="40"> ---- */
+    .nav-logo .logo-main span { color: var(--gold); }
+    .nav-logo .logo-sub {
+      font-family: var(--font-body);
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.75);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      align-items: center;
+    }
+    .nav-links a {
+      font-family: var(--font-cond);
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.88);
+      transition: color var(--transition);
+    }
+    .nav-links a:hover { color: var(--white); }
+    .nav-cta {
+      background: var(--white) !important;
+      color: var(--red) !important;
+      padding: 8px 20px;
+      border-radius: var(--radius);
+      font-weight: 700 !important;
+      border: 2px solid var(--white) !important;
+    }
+    .nav-cta:hover {
+      background: transparent !important;
+      color: var(--white) !important;
+    }
+    /* Mobile hamburger */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 8px 10px;
+      background: var(--red);
+      border: 2px solid var(--black);
+      border-radius: var(--radius);
+    }
+    .hamburger span {
+      width: 22px; height: 2px;
+      background: var(--black);
+      border-radius: 2px;
+      transition: all 0.3s;
+    }
+    .hamburger:hover {
+      background: var(--red-dark);
     }
 
     /* ── PAGE HERO ── */
@@ -146,7 +255,7 @@
     .section-header .section-title { margin-bottom: 14px; }
     .section-header .section-sub { max-width: 560px; margin: 0 auto; }
 
-    /* ── MARCAS PARTNERS ── */
+    /* ── MARCAS PARTNERS 
     .brands-section { padding: 80px 0; background: var(--white); }
     .partners-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 28px; }
 
@@ -208,7 +317,7 @@
       transition: background var(--transition), color var(--transition);
     }
     .partner-link-btn:hover { background: var(--red); color: var(--white); }
-    .partner-link-btn svg { width: 12px; height: 12px; flex-shrink: 0; }
+    .partner-link-btn svg { width: 12px; height: 12px; flex-shrink: 0; } ── */
 
     /* ── DIVIDER ── */
     .section-divider { background: var(--black); padding: 20px 0; text-align: center; }
@@ -342,10 +451,32 @@
   </style>
 </head>
 <body>
+    
+    <!-- ANNOUNCEMENT BAR -->
+  <div class="announcement-bar">
+    🎉 Lanzamiento especial — Usa el código <span>LANZ10</span> y obtén <span>10% de descuento</span> en tu primer pedido &nbsp;|&nbsp; Envío a todo México
+  </div>
 
   <!-- ══════════════════════════════════════════════
        AQUÍ VA TU HEADER (cópialo del index)
   ══════════════════════════════════════════════ -->
+  
+   <header>
+    <nav class="nav-inner">
+      <a href="/" class="nav-logo">
+        <img src="data:image/jpeg;base64,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" alt="Jugador Estrella" height="52" style="display:block;">
+      </a>
+      <button class="hamburger" id="hamburger" aria-label="Menú">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#como-funciona">¿Cómo funciona?</a></li>
+        <li><a href="#designs">Diseños</a></li>
+        <li><a href="#paquetes">Paquetes</a></li>
+        <li><a href="https://jugadorestrella.com/store/producto/tarjetas-deportivas-personalizadas/" class="nav-cta btn">Crear mi tarjeta</a></li>
+      </ul>
+    </nav>
+  </header>
 
   <!-- ==================== PAGE HERO ==================== -->
   <section class="partners-hero">
@@ -357,7 +488,7 @@
     </div>
   </section>
 
-  <!-- ==================== MARCAS PARTNERS ==================== -->
+  <!-- ==================== MARCAS PARTNERS ==================== 
   <section class="brands-section" id="marcas">
     <div class="container">
 
@@ -377,11 +508,11 @@
           3. .partner-name → Nombre de la marca
           4. .partner-desc → Descripción corta (1–2 líneas)
           ════════════════════════════════════════════════════
-        -->
+      
 
         <a href="#" target="_blank" rel="noopener" class="partner-card">
           <div class="partner-img-wrap">
-            <!-- <img src="images/partners/marca-01.png" alt="Nombre Marca"> -->
+             <img src="images/partners/marca-01.png" alt="Nombre Marca">
             <span class="partner-img-ph">🏅</span>
           </div>
           <div class="partner-name">Nombre Marca</div>
@@ -391,7 +522,7 @@
 
         <a href="#" target="_blank" rel="noopener" class="partner-card">
           <div class="partner-img-wrap">
-            <!-- <img src="images/partners/marca-02.png" alt="Nombre Marca"> -->
+            <img src="images/partners/marca-02.png" alt="Nombre Marca">
             <span class="partner-img-ph">⚽</span>
           </div>
           <div class="partner-name">Nombre Marca</div>
@@ -401,7 +532,7 @@
 
         <a href="#" target="_blank" rel="noopener" class="partner-card">
           <div class="partner-img-wrap">
-            <!-- <img src="images/partners/marca-03.png" alt="Nombre Marca"> -->
+             <img src="images/partners/marca-03.png" alt="Nombre Marca">
             <span class="partner-img-ph">🏀</span>
           </div>
           <div class="partner-name">Nombre Marca</div>
@@ -411,7 +542,7 @@
 
         <a href="#" target="_blank" rel="noopener" class="partner-card">
           <div class="partner-img-wrap">
-            <!-- <img src="images/partners/marca-04.png" alt="Nombre Marca"> -->
+             <img src="images/partners/marca-04.png" alt="Nombre Marca">
             <span class="partner-img-ph">🏈</span>
           </div>
           <div class="partner-name">Nombre Marca</div>
@@ -421,7 +552,7 @@
 
         <a href="#" target="_blank" rel="noopener" class="partner-card">
           <div class="partner-img-wrap">
-            <!-- <img src="images/partners/marca-05.png" alt="Nombre Marca"> -->
+             <img src="images/partners/marca-05.png" alt="Nombre Marca">
             <span class="partner-img-ph">⚾</span>
           </div>
           <div class="partner-name">Nombre Marca</div>
@@ -431,7 +562,7 @@
 
         <a href="#" target="_blank" rel="noopener" class="partner-card">
           <div class="partner-img-wrap">
-            <!-- <img src="images/partners/marca-06.png" alt="Nombre Marca"> -->
+             <img src="images/partners/marca-06.png" alt="Nombre Marca">
             <span class="partner-img-ph">🥇</span>
           </div>
           <div class="partner-name">Nombre Marca</div>
@@ -441,7 +572,7 @@
 
         <a href="#" target="_blank" rel="noopener" class="partner-card">
           <div class="partner-img-wrap">
-            <!-- <img src="images/partners/marca-07.png" alt="Nombre Marca"> -->
+             <img src="images/partners/marca-07.png" alt="Nombre Marca">
             <span class="partner-img-ph">🏒</span>
           </div>
           <div class="partner-name">Nombre Marca</div>
@@ -451,7 +582,7 @@
 
         <a href="#" target="_blank" rel="noopener" class="partner-card">
           <div class="partner-img-wrap">
-            <!-- <img src="images/partners/marca-08.png" alt="Nombre Marca"> -->
+             <img src="images/partners/marca-08.png" alt="Nombre Marca">
             <span class="partner-img-ph">🎽</span>
           </div>
           <div class="partner-name">Nombre Marca</div>
@@ -461,7 +592,7 @@
 
       </div>
     </div>
-  </section>
+  </section> -->
 
   <!-- ==================== DIVIDER ==================== -->
   <div class="section-divider">
@@ -493,109 +624,109 @@
           ════════════════════════════════════════════════════
         -->
 
-        <a href="#" target="_blank" rel="noopener" class="influencer-card">
+        <a href="https://www.tiktok.com/@cuaumaldo?_r=1&_t=ZS-96MLRXcVVP3" target="_blank" rel="noopener" class="influencer-card">
           <div class="influencer-img-wrap">
-            <!-- <img src="images/influencers/influencer-01.jpg" alt="Nombre Influencer"> -->
-            <div class="influencer-img-ph">📸<br><small>Foto del embajador</small></div>
-            <span class="platform-badge ig">📷 Instagram</span>
+             <img src="images/influencers/influencer-01.jpg" alt="CUAU MALDONADO"> 
+            <!-- <div class="influencer-img-ph">📸<br><small>Foto del embajador</small></div>-->
+            <span class="platform-badge tt">♪ TikTok</span>
           </div>
           <div class="influencer-body">
-            <div class="influencer-name">Nombre Influencer</div>
-            <div class="influencer-handle">@handle</div>
-            <p class="influencer-bio">Descripción breve: deporte, tipo de contenido y por qué es embajador de Jugador Estrella.</p>
+            <div class="influencer-name">Cuau Maldonado</div>
+            <div class="influencer-handle">@cuaumaldo</div>
+            <p class="influencer-bio">Jugador Mexicano de Hockey sobre Hielo. Campeon con Olmecs Stone Heads LMEH</p>
             <div class="influencer-stats">
-              <div class="i-stat"><strong>00K</strong><span>Seguidores</span></div>
-              <div class="i-stat"><strong>⚽</strong><span>Fútbol</span></div>
+               <!--<div class="i-stat"><strong>00K</strong><span>Seguidores</span></div> -->
+              <div class="i-stat"><strong>🏒</strong><span>ICE HOCKEY</span></div>
             </div>
             <span class="influencer-link-btn">Ver perfil <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
           </div>
         </a>
 
-        <a href="#" target="_blank" rel="noopener" class="influencer-card">
+        <a href="https://www.tiktok.com/@mati.23.gk" target="_blank" rel="noopener" class="influencer-card">
           <div class="influencer-img-wrap">
-            <!-- <img src="images/influencers/influencer-02.jpg" alt="Nombre Influencer"> -->
+            <!--  --><img src="images/influencers/influencer-02.jpg" alt="MATI 23">
             <div class="influencer-img-ph">🎬<br><small>Foto del embajador</small></div>
-            <span class="platform-badge yt">▶ YouTube</span>
+            <span class="platform-badge tt">♪ TikTok</span>
           </div>
           <div class="influencer-body">
-            <div class="influencer-name">Nombre Influencer</div>
-            <div class="influencer-handle">@handle</div>
-            <p class="influencer-bio">Descripción breve: deporte, tipo de contenido y por qué es embajador de Jugador Estrella.</p>
+            <div class="influencer-name">MATI</div>
+            <div class="influencer-handle">@mati.23.gk</div>
+            <p class="influencer-bio">Portero de categorias infantiles. Futura promesa del fútbol nacional.</p>
             <div class="influencer-stats">
-              <div class="i-stat"><strong>00K</strong><span>Suscriptores</span></div>
-              <div class="i-stat"><strong>🏀</strong><span>Basquetbol</span></div>
+              <!--  <div class="i-stat"><strong>00K</strong><span>Suscriptores</span></div>-->
+              <div class="i-stat"><strong>⚽</strong><span>Fútbol Soccer</span></div>
             </div>
             <span class="influencer-link-btn">Ver canal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
           </div>
         </a>
 
-        <a href="#" target="_blank" rel="noopener" class="influencer-card">
+        <a href="https://www.tiktok.com/@elisa.jauregui" target="_blank" rel="noopener" class="influencer-card">
           <div class="influencer-img-wrap">
-            <!-- <img src="images/influencers/influencer-03.jpg" alt="Nombre Influencer"> -->
-            <div class="influencer-img-ph">🎵<br><small>Foto del embajador</small></div>
+           <img src="images/influencers/influencer-03_A.jpg" alt="Elisa Jauregui"> -->
+             <!-- <div class="influencer-img-ph">🎵<br><small>Foto del embajador</small></div>-->
             <span class="platform-badge tt">♪ TikTok</span>
           </div>
           <div class="influencer-body">
-            <div class="influencer-name">Nombre Influencer</div>
-            <div class="influencer-handle">@handle</div>
-            <p class="influencer-bio">Descripción breve: deporte, tipo de contenido y por qué es embajador de Jugador Estrella.</p>
+            <div class="influencer-name">Soy Máma en Gradas</div>
+            <div class="influencer-handle">@elisa.jauregui</div>
+            <p class="influencer-bio">Mamá de fútbol americano que, con su alegría y porras, lleva el apoyo a los jugadores a otro nivel desde la tribuna.</p>
             <div class="influencer-stats">
-              <div class="i-stat"><strong>00K</strong><span>Seguidores</span></div>
-              <div class="i-stat"><strong>⚾</strong><span>Béisbol</span></div>
+             <!--  <div class="i-stat"><strong>00K</strong><span>Suscriptores</span></div>-->
+              <div class="i-stat"><strong>🏈</strong><span>Fútbol Americano</span></div>
             </div>
             <span class="influencer-link-btn">Ver TikTok <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
           </div>
         </a>
 
-        <a href="#" target="_blank" rel="noopener" class="influencer-card">
+        <a href="https://www.tiktok.com/@escueladebeisbolcaribe" target="_blank" rel="noopener" class="influencer-card">
           <div class="influencer-img-wrap">
-            <!-- <img src="images/influencers/influencer-04.jpg" alt="Nombre Influencer"> -->
-            <div class="influencer-img-ph">📸<br><small>Foto del embajador</small></div>
-            <span class="platform-badge ig">📷 Instagram</span>
-          </div>
-          <div class="influencer-body">
-            <div class="influencer-name">Nombre Influencer</div>
-            <div class="influencer-handle">@handle</div>
-            <p class="influencer-bio">Descripción breve: deporte, tipo de contenido y por qué es embajador de Jugador Estrella.</p>
-            <div class="influencer-stats">
-              <div class="i-stat"><strong>00K</strong><span>Seguidores</span></div>
-              <div class="i-stat"><strong>🏈</strong><span>Fút. Am.</span></div>
-            </div>
-            <span class="influencer-link-btn">Ver perfil <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a href="#" target="_blank" rel="noopener" class="influencer-card">
-          <div class="influencer-img-wrap">
-            <!-- <img src="images/influencers/influencer-05.jpg" alt="Nombre Influencer"> -->
-            <div class="influencer-img-ph">🎬<br><small>Foto del embajador</small></div>
-            <span class="platform-badge yt">▶ YouTube</span>
-          </div>
-          <div class="influencer-body">
-            <div class="influencer-name">Nombre Influencer</div>
-            <div class="influencer-handle">@handle</div>
-            <p class="influencer-bio">Descripción breve: deporte, tipo de contenido y por qué es embajador de Jugador Estrella.</p>
-            <div class="influencer-stats">
-              <div class="i-stat"><strong>00K</strong><span>Suscriptores</span></div>
-              <div class="i-stat"><strong>🏒</strong><span>Hockey</span></div>
-            </div>
-            <span class="influencer-link-btn">Ver canal <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
-          </div>
-        </a>
-
-        <a href="#" target="_blank" rel="noopener" class="influencer-card">
-          <div class="influencer-img-wrap">
-            <!-- <img src="images/influencers/influencer-06.jpg" alt="Nombre Influencer"> -->
-            <div class="influencer-img-ph">🎵<br><small>Foto del embajador</small></div>
+            <img src="images/influencers/influencer-04.jpg" alt="Escuela de Beisbol Caribe">
+            <!-- <div class="influencer-img-ph">📸<br><small>Foto del embajador</small></div> -->
             <span class="platform-badge tt">♪ TikTok</span>
           </div>
           <div class="influencer-body">
-            <div class="influencer-name">Nombre Influencer</div>
-            <div class="influencer-handle">@handle</div>
-            <p class="influencer-bio">Descripción breve: deporte, tipo de contenido y por qué es embajador de Jugador Estrella.</p>
+            <div class="influencer-name">Escuela de Beisbol Caribe</div>
+            <div class="influencer-handle">@escueladebeisbolcaribe</div>
+            <p class="influencer-bio">Academia infantil y juvenil que combina disciplina y diversión para potenciar el desarrollo y la pasión de futuros peloteros en el diamante.</p>
             <div class="influencer-stats">
-              <div class="i-stat"><strong>00K</strong><span>Seguidores</span></div>
-              <div class="i-stat"><strong>⚽</strong><span>Fútbol</span></div>
+               <!--  <div class="i-stat"><strong>00K</strong><span>Suscriptores</span></div>-->
+              <div class="i-stat"><strong>⚾</strong><span>Beisbol</span></div>
+            </div>
+            <span class="influencer-link-btn">Ver TikTok <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a href="https://www.tiktok.com/@r30mid" target="_blank" rel="noopener" class="influencer-card">
+          <div class="influencer-img-wrap">
+             <img src="images/influencers/influencer-05.jpg" alt="Regina R30"> 
+            <!--<div class="influencer-img-ph">🎬<br><small>Foto del embajador</small></div> -->
+            <span class="platform-badge tt">♪ TikTok</span>
+          </div>
+          <div class="influencer-body">
+            <div class="influencer-name">Regina R30</div>
+            <div class="influencer-handle">@r30mid</div>
+            <p class="influencer-bio">Básquetbolista de Mérida que, con su gran talento y pasión, llena de energía cada partido y contagia su amor por el juego en la duela.</p>
+            <div class="influencer-stats">
+              <!--<div class="i-stat"><strong>00K</strong><span>Suscriptores</span></div>-->
+              <div class="i-stat"><strong>🏀</strong><span>Basquetbol</span></div>
+            </div>
+            <span class="influencer-link-btn">Ver TikTok <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
+          </div>
+        </a>
+
+        <a href="https://www.tiktok.com/@itzelleon234" target="_blank" rel="noopener" class="influencer-card">
+          <div class="influencer-img-wrap">
+             <img src="images/influencers/influencer-06.jpg" alt="@itzelleon234">
+            <!--<div class="influencer-img-ph">🎵<br><small>Foto del embajador</small></div> -->
+            <span class="platform-badge tt">♪ TikTok</span>
+          </div>
+          <div class="influencer-body">
+            <div class="influencer-name">Itzel D'León</div>
+            <div class="influencer-handle">@itzelleon234</div>
+            <p class="influencer-bio">Mamá de un futbolista infantil que, con su gran pasión por el fútbol, vive intensamente cada juego de su futuro crack.</p>
+            <div class="influencer-stats">
+              <!--  <div class="i-stat"><strong>00K</strong><span>Suscriptores</span></div>-->
+              <div class="i-stat"><strong>⚽</strong><span>Fútbol Soccer</span></div>
             </div>
             <span class="influencer-link-btn">Ver TikTok <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M7 17L17 7M17 7H7M17 7v10"/></svg></span>
           </div>
@@ -620,6 +751,50 @@
   <!-- ══════════════════════════════════════════════
        AQUÍ VA TU FOOTER (cópialo del index)
   ══════════════════════════════════════════════ -->
+  
+   <!-- ==================== FOOTER — idéntico al store ==================== -->
+  <footer id="colophon" class="site-footer" style="background:#ff0000; color:#ffffff; padding:40px 20px; font-family:'Open Sans', Arial, sans-serif; font-size:16px; text-align:center;">
+    <div style="max-width:1200px; margin:0 auto;">
+
+      <!-- Logo -->
+      <div style="margin-bottom:25px;">
+        <a href="https://jugadorestrella.com/store">
+          <img src="data:image/jpeg;base64,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" alt="Jugador Estrella" style="height:75px; margin-bottom:10px; display:inline-block;">
+        </a>
+        <p style="margin:8px 0; color:#ffffff; font-size:1rem;">
+          El mejor recuerdo de tus hazañas deportivas
+        </p>
+      </div>
+
+      <!-- Menú legal -->
+      <div style="margin:20px 0;">
+        <a href="https://jugadorestrella.com/store/politica-de-privacidad/" style="color:#000000; text-decoration:none; margin:0 12px;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#000000'">Política de Privacidad</a>
+        <a href="https://jugadorestrella.com/store/terminos-y-condiciones/" style="color:#000000; text-decoration:none; margin:0 12px;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#000000'">Términos y Condiciones</a>
+        <a href="https://jugadorestrella.com/store/aviso-legal/" style="color:#000000; text-decoration:none; margin:0 12px;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#000000'">Aviso Legal</a>
+        <a href="https://jugadorestrella.com/store/politica-de-envios/" style="color:#000000; text-decoration:none; margin:0 12px;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#000000'">Política de Envíos</a>
+         <a href="https://jugadorestrella.com/partners/" style="color:#000000; text-decoration:none; margin:0 12px;" onmouseover="this.style.color='#ffffff'" onmouseout="this.style.color='#000000'">Partners</a>
+      </div>
+
+      <!-- Redes sociales -->
+      <div class="footer-social-icons" style="margin:20px 0;">
+        <a href="https://www.facebook.com/profile.php?id=100069552754476" target="_blank"><img src="https://jugadorestrella.com/store/wp-content/themes/popularfx/images/facebook2.png" alt="Facebook" width="50" height="50" style="margin:0 8px;"></a>
+        <a href="https://www.instagram.com/jugador.estrella/" target="_blank"><img src="https://jugadorestrella.com/store/wp-content/themes/popularfx/images/instagram.png" alt="Instagram" width="50" height="50" style="margin:0 8px;"></a>
+        <a href="https://wa.me/525571999695" target="_blank"><img src="https://jugadorestrella.com/store/wp-content/themes/popularfx/images/whatsapp.png" alt="WhatsApp" width="50" height="50" style="margin:0 8px;"></a>
+        <a href="https://www.tiktok.com/@jugador.estrella" target="_blank"><img src="https://jugadorestrella.com/store/wp-content/themes/popularfx/images/tiktok.png" alt="TikTok" width="50" height="50" style="margin:0 8px;"></a>
+        <a href="https://www.youtube.com/@jugadorestrella" target="_blank"><img src="https://jugadorestrella.com/store/wp-content/themes/popularfx/images/youtube.png" alt="YouTube" width="50" height="50" style="margin:0 8px;"></a>
+        <a href="https://x.com/JugadorEstrella" target="_blank"><img src="https://jugadorestrella.com/store/wp-content/themes/popularfx/images/x.png" alt="X (Twitter)" width="50" height="50" style="margin:0 8px;"></a>
+      </div>
+      <style>.footer-social-icons a{text-decoration:none;}.footer-social-icons img{transition:.2s;display:inline-block;}.footer-social-icons img:hover{transform:scale(1.1);}</style>
+
+      <!-- Copyright -->
+      <div style="margin-top:25px; border-top:1px solid #cc0000; padding-top:15px; color:#ffffff; font-size:11px;">
+        © 2026 JUGADOR ESTRELLA. Todos los derechos reservados.
+      </div>
+    </div>
+  </footer>
+
+  
+  
 
   <script>
     document.addEventListener('DOMContentLoaded', () => {
